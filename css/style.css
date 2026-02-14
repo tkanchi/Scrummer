@@ -1058,3 +1058,5 @@ html[data-theme="dark"] .selectLike:focus{
   .hbSub{ display:none; }
   .hbLine{ font-size: 12px; }
 }
+/* Safety: old heroTag should never render now */
+.heroTag{ display:none !important; }
