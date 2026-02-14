@@ -102,15 +102,15 @@
           </div>
         </div>
 
-        <!-- ✅ View Insights CTA (icon always visible; color changes via JS state) -->
+        <!-- ✅ CTA uses "Next: Insights" -->
         <div class="btnRow">
-          <a class="btn btnPrimary primaryCtaFixed" href="intelligence.html" id="viewInsightsBtn">
+          <a class="btn btnPrimary primaryCtaFixed" href="intelligence.html" id="nextInsightsBtn">
             <span class="btnIcon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none">
                 <path d="M5 19V10M10 19V5M15 19v-8M20 19v-12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
               </svg>
             </span>
-            <span id="viewInsightsText">View Insights</span>
+            <span id="nextInsightsText">Next: Insights</span>
           </a>
         </div>
       </header>
@@ -201,7 +201,7 @@
   <script src="js/theme.js"></script>
   <script src="js/shell.js"></script>
 
-  <!-- ✅ Setup gating + View Insights button state -->
+  <!-- ✅ Setup gating + CTA state -->
   <script>
     (function(){
       const $ = (id) => document.getElementById(id);
@@ -209,27 +209,27 @@
       if (!setup) return;
 
       const fields = ["sprintDays","teamMembers","leaveDays","committedSP","v1","v2","v3"];
-      const viewBtn = $("viewInsightsBtn");
-      const viewText = $("viewInsightsText");
+      const nextBtn = $("nextInsightsBtn");
+      const nextText = $("nextInsightsText");
 
       function hasSavedSetup(){
         try{ return localStorage.getItem("scrummer.setupSaved") === "1"; }catch(e){ return false; }
       }
 
       // Hook for demo loader
-      window.__scrummerUpdateNav = updateInsightsBtn;
+      window.__scrummerUpdateNav = updateNextBtn;
 
-      function updateInsightsBtn(){
-        if (!viewBtn || !viewText) return;
+      function updateNextBtn(){
+        if (!nextBtn || !nextText) return;
 
         if (hasSavedSetup()){
-          viewBtn.classList.remove("btnSubtle");
-          viewBtn.classList.add("btnPrimary");
-          viewText.textContent = "View Insights";
+          nextBtn.classList.remove("btnSubtle");
+          nextBtn.classList.add("btnPrimary");
+          nextText.textContent = "Next: Insights";
         } else {
-          viewBtn.classList.remove("btnPrimary");
-          viewBtn.classList.add("btnSubtle");
-          viewText.textContent = "View Insights (save setup)";
+          nextBtn.classList.remove("btnPrimary");
+          nextBtn.classList.add("btnSubtle");
+          nextText.textContent = "Next: Insights (save setup)";
         }
       }
 
@@ -246,8 +246,8 @@
         setTimeout(()=>{ el.style.display="none"; }, 2200);
       }
 
-      // Block navigation unless saved
-      viewBtn?.addEventListener("click", (e)=>{
+      // Block nav unless saved
+      nextBtn?.addEventListener("click", (e)=>{
         if (!hasSavedSetup()){
           e.preventDefault();
           showMsg("Please click Save & Continue first.");
@@ -259,7 +259,7 @@
         fields.forEach(k => data[k] = $(k) ? $(k).value : "");
         setup.saveSetup(data);
         try{ localStorage.setItem("scrummer.setupSaved","1"); }catch(e){}
-        updateInsightsBtn();
+        updateNextBtn();
         showMsg("Saved. Redirecting to Insights…");
         window.location.href = "intelligence.html";
       });
@@ -268,12 +268,12 @@
         setup.saveSetup({});
         fields.forEach(k => { if ($(k)) $(k).value = ""; });
         try{ localStorage.removeItem("scrummer.setupSaved"); }catch(e){}
-        updateInsightsBtn();
+        updateNextBtn();
         showMsg("Reset complete.");
       });
 
       prefill();
-      updateInsightsBtn();
+      updateNextBtn();
     })();
   </script>
 
@@ -303,7 +303,7 @@
         const msg = $("setupMsg");
         if(msg){
           msg.style.display="block";
-          msg.textContent="Demo loaded. Click View Insights.";
+          msg.textContent="Demo loaded. Click Next: Insights.";
           setTimeout(()=>{ msg.style.display="none"; }, 1600);
         }
 
