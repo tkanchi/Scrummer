@@ -2,7 +2,7 @@
    Scrummer — shell.js
    - Active left nav highlight (body[data-page])
    - Workspace ceremony pills (data-ceremony / data-panel)
-   - Injects hero tagline (.heroTag) into .topbarLeft consistently
+   - Injects compact topbar brand strip (logo + tagline)
    ========================================================= */
 
 (() => {
@@ -41,20 +41,32 @@
   }
 
   // ----------------------------
-  // 3) Inject hero tagline consistently
+  // 3) Inject compact TOPBAR brand strip (logo + tagline)
   // ----------------------------
   const host = document.querySelector(".topbarLeft");
   if (!host) return;
 
-  // avoid duplicates (important!)
-  if (host.querySelector(".heroTag")) return;
+  // avoid duplicates
+  if (host.querySelector(".headerBrand")) return;
 
-  const tag = document.createElement("div");
-  tag.className = "heroTag";
-  tag.innerHTML = `
-    <div class="heroLine">Know What’s Happening. Know What To Do Next.</div>
-    <div class="heroSub">AI-powered delivery intelligence for modern Agile teams.</div>
+  const wrap = document.createElement("div");
+  wrap.className = "headerBrand";
+  wrap.innerHTML = `
+    <div class="hbLeft" aria-label="Scrummer">
+      <div class="hbMark" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M12 12 L19 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="12" cy="12" r="2" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="hbText">
+        <div class="hbLine">Know what’s happening. Know what to do next.</div>
+        <div class="hbSub">AI-powered delivery intelligence for modern Agile teams.</div>
+      </div>
+    </div>
   `;
 
-  host.prepend(tag);
+  // Put it at the top of the header left area
+  host.prepend(wrap);
 })();
