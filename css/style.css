@@ -1,6 +1,6 @@
 /* =========================================================
    SCRUMMER — Premium Futuristic (Light-first) + Guided Flow
-   Drop-in replacement for css/style.css  (FINAL)
+   Drop-in replacement for css/style.css  (FINAL / CLEAN)
    ========================================================= */
 
 /* -----------------------------
@@ -104,7 +104,7 @@ button, input, select, textarea{ font: inherit; }
 html[data-theme="dark"] ::selection{ background: rgba(96,165,250,.18); }
 
 /* -----------------------------
-   Inputs
+   Inputs (global)
 ------------------------------ */
 input, textarea, select{
   width:100%;
@@ -133,10 +133,7 @@ html[data-theme="dark"] select:focus{
 /* -----------------------------
    Shell layout
 ------------------------------ */
-.app{
-  display:flex;
-  min-height:100vh;
-}
+.app{ display:flex; min-height:100vh; }
 
 .sidebar{
   width: var(--sidebar-w);
@@ -553,10 +550,7 @@ html[data-theme="dark"] .btnSubtle{
   background: var(--bg-secondary);
   box-shadow: var(--shadow-sm);
 }
-.bannerTitle{
-  font-weight: 950;
-  letter-spacing: -0.2px;
-}
+.bannerTitle{ font-weight: 950; letter-spacing: -0.2px; }
 .bannerText{
   margin-top:6px;
   color: var(--text-muted);
@@ -594,18 +588,9 @@ html[data-theme="dark"] .bannerDanger{ background: linear-gradient(180deg, rgba(
   font-size: 12px;
   white-space: nowrap;
 }
-.bannerOk .badge{
-  border-color: rgba(22,163,74,.25);
-  background: rgba(22,163,74,.12);
-}
-.bannerWarn .badge{
-  border-color: rgba(245,158,11,.25);
-  background: rgba(245,158,11,.12);
-}
-.bannerDanger .badge{
-  border-color: rgba(220,38,38,.25);
-  background: rgba(220,38,38,.12);
-}
+.bannerOk .badge{ border-color: rgba(22,163,74,.25); background: rgba(22,163,74,.12); }
+.bannerWarn .badge{ border-color: rgba(245,158,11,.25); background: rgba(245,158,11,.12); }
+.bannerDanger .badge{ border-color: rgba(220,38,38,.25); background: rgba(220,38,38,.12); }
 
 /* KPI */
 .kpi .kpiValue{
@@ -657,22 +642,12 @@ html[data-theme="dark"] .bannerDanger{ background: linear-gradient(180deg, rgba(
 }
 
 /* ✅ Status chip coloring (used by intelligence.js) */
-.chip.ok{
-  border-color: rgba(22,163,74,.28);
-  background: rgba(22,163,74,.10);
-}
-.chip.warn{
-  border-color: rgba(245,158,11,.30);
-  background: rgba(245,158,11,.10);
-}
-.chip.danger{
-  border-color: rgba(220,38,38,.30);
-  background: rgba(220,38,38,.10);
-}
+.chip.ok{ border-color: rgba(22,163,74,.28); background: rgba(22,163,74,.10); }
+.chip.warn{ border-color: rgba(245,158,11,.30); background: rgba(245,158,11,.10); }
+.chip.danger{ border-color: rgba(220,38,38,.30); background: rgba(220,38,38,.10); }
 .chip.ok .chipDot{ background: var(--success); }
 .chip.warn .chipDot{ background: var(--warning); }
 .chip.danger .chipDot{ background: var(--danger); }
-
 html[data-theme="dark"] .chip.ok{ background: rgba(22,163,74,.14); }
 html[data-theme="dark"] .chip.warn{ background: rgba(245,158,11,.14); }
 html[data-theme="dark"] .chip.danger{ background: rgba(220,38,38,.14); }
@@ -695,9 +670,201 @@ html[data-theme="dark"] .chip.danger{ background: rgba(220,38,38,.14); }
 .formulaChip b{ font-weight: 950; }
 
 /* =========================================================
+   Drivers + History rows (JS uses these class names)
+========================================================= */
+.driverItem{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:14px;
+  padding:14px;
+  border-radius:16px;
+  border:1px solid var(--border-soft);
+  background: var(--bg-secondary);
+  box-shadow: var(--shadow-sm);
+}
+.driverLeft{ min-width:0; }
+.driverTitle{
+  font-weight: 950;
+  font-size: 14px;
+  letter-spacing: -0.2px;
+}
+.driverDesc{
+  margin-top:6px;
+  color: var(--text-muted);
+  font-weight: 650;
+  line-height: 1.55;
+}
+.driverRight{
+  width: 220px;
+  flex: 0 0 auto;
+  text-align:right;
+}
+@media (max-width: 860px){
+  .driverItem{ flex-direction:column; }
+  .driverRight{ width:100%; text-align:left; }
+}
+.driverScore{ font-weight: 950; font-size: 13px; }
+.driverMini{
+  margin-top:6px;
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 12px;
+}
+.driverBar{
+  margin-top:10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(100,116,139,.12);
+  border: 1px solid rgba(100,116,139,.14);
+  overflow:hidden;
+}
+.driverBarFill{
+  height:100%;
+  width:0%;
+  border-radius:999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+}
+
+.historyRow{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:14px;
+  padding:14px;
+  border-radius:16px;
+  border:1px solid var(--border-soft);
+  background: var(--bg-secondary);
+  box-shadow: var(--shadow-sm);
+}
+.historyLeft{ min-width:0; }
+.historyTitle{ font-weight: 950; letter-spacing:-0.2px; }
+.historyMeta{
+  margin-top:6px;
+  color: var(--text-muted);
+  font-weight: 650;
+  line-height: 1.55;
+}
+.historyRight{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  gap:8px;
+  max-width: 520px;
+}
+@media (max-width: 860px){
+  .historyRow{ flex-direction:column; }
+  .historyRight{ justify-content:flex-start; max-width:100%; }
+}
+
+/* Small pills used by history */
+.pillMini{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid var(--border-soft);
+  background: rgba(100,116,139,.08);
+  font-weight: 900;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* Delta colors (used by deltaUp/deltaDown/deltaFlat) */
+.deltaUp{ color: var(--success); font-weight: 950; }
+.deltaDown{ color: var(--danger); font-weight: 950; }
+.deltaFlat{ color: var(--text-muted); font-weight: 900; }
+
+/* =========================================================
+   Suggestions (Actions) — red/yellow/green cards
+   (Works with the updated suggestions.js)
+========================================================= */
+.actionCard{
+  border-radius: 16px;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-secondary);
+  padding: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.actionHead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:8px;
+}
+
+.actionTitle{
+  font-weight: 950;
+  letter-spacing: -0.2px;
+  font-size: 14px;
+}
+
+.actionDesc{
+  color: var(--text-muted);
+  font-weight: 650;
+  line-height: 1.55;
+}
+
+.actionPill{
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border-soft);
+  background: rgba(100,116,139,.08);
+  font-weight: 950;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+/* Status tones */
+.actionCard.ok{
+  border-color: rgba(22,163,74,.30);
+  background: linear-gradient(180deg, rgba(22,163,74,.10), rgba(255,255,255,0));
+}
+.actionCard.warn{
+  border-color: rgba(245,158,11,.30);
+  background: linear-gradient(180deg, rgba(245,158,11,.10), rgba(255,255,255,0));
+}
+.actionCard.danger{
+  border-color: rgba(220,38,38,.30);
+  background: linear-gradient(180deg, rgba(220,38,38,.10), rgba(255,255,255,0));
+}
+
+.actionPill.ok{
+  border-color: rgba(22,163,74,.35);
+  background: rgba(22,163,74,.14);
+  color: #15803d;
+}
+.actionPill.warn{
+  border-color: rgba(245,158,11,.35);
+  background: rgba(245,158,11,.14);
+  color: #b45309;
+}
+.actionPill.danger{
+  border-color: rgba(220,38,38,.35);
+  background: rgba(220,38,38,.14);
+  color: #b91c1c;
+}
+
+/* Dark theme readability */
+html[data-theme="dark"] .actionCard.ok{
+  background: linear-gradient(180deg, rgba(22,163,74,.16), rgba(15,26,46,0));
+}
+html[data-theme="dark"] .actionCard.warn{
+  background: linear-gradient(180deg, rgba(245,158,11,.16), rgba(15,26,46,0));
+}
+html[data-theme="dark"] .actionCard.danger{
+  background: linear-gradient(180deg, rgba(220,38,38,.16), rgba(15,26,46,0));
+}
+html[data-theme="dark"] .actionPill.ok{ color:#bbf7d0; }
+html[data-theme="dark"] .actionPill.warn{ color:#fde68a; }
+html[data-theme="dark"] .actionPill.danger{ color:#fecaca; }
+
+/* =========================================================
    Workspace / Copilot components
 ========================================================= */
-
 .cmdTitle{
   display:flex;
   align-items:flex-start;
@@ -783,11 +950,7 @@ html[data-theme="dark"] .chip.danger{ background: rgba(220,38,38,.14); }
 }
 
 /* Field grids */
-.fieldGrid{
-  margin-top: 12px;
-  display:grid;
-  gap:10px;
-}
+.fieldGrid{ margin-top: 12px; display:grid; gap:10px; }
 .smallHelp{
   margin-top: 12px;
   color: var(--text-muted);
@@ -795,118 +958,3 @@ html[data-theme="dark"] .chip.danger{ background: rgba(220,38,38,.14); }
   font-size: 12px;
   line-height: 1.55;
 }
-
-/* =========================================================
-   Drivers + History rows (JS uses these class names)
-========================================================= */
-
-.driverItem{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:14px;
-  padding:14px;
-  border-radius:16px;
-  border:1px solid var(--border-soft);
-  background: var(--bg-secondary);
-  box-shadow: var(--shadow-sm);
-}
-.driverLeft{ min-width:0; }
-.driverTitle{
-  font-weight: 950;
-  font-size: 14px;
-  letter-spacing: -0.2px;
-}
-.driverDesc{
-  margin-top:6px;
-  color: var(--text-muted);
-  font-weight: 650;
-  line-height: 1.55;
-}
-.driverRight{
-  width: 220px;
-  flex: 0 0 auto;
-  text-align:right;
-}
-@media (max-width: 860px){
-  .driverItem{ flex-direction:column; }
-  .driverRight{ width:100%; text-align:left; }
-}
-
-.driverScore{
-  font-weight: 950;
-  font-size: 13px;
-}
-.driverMini{
-  margin-top:6px;
-  color: var(--text-muted);
-  font-weight: 700;
-  font-size: 12px;
-}
-.driverBar{
-  margin-top:10px;
-  height: 10px;
-  border-radius: 999px;
-  background: rgba(100,116,139,.12);
-  border: 1px solid rgba(100,116,139,.14);
-  overflow:hidden;
-}
-.driverBarFill{
-  height:100%;
-  width:0%;
-  border-radius:999px;
-  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
-}
-
-.historyRow{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:14px;
-  padding:14px;
-  border-radius:16px;
-  border:1px solid var(--border-soft);
-  background: var(--bg-secondary);
-  box-shadow: var(--shadow-sm);
-}
-.historyLeft{ min-width:0; }
-.historyTitle{
-  font-weight: 950;
-  letter-spacing:-0.2px;
-}
-.historyMeta{
-  margin-top:6px;
-  color: var(--text-muted);
-  font-weight: 650;
-  line-height: 1.55;
-}
-.historyRight{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:flex-end;
-  gap:8px;
-  max-width: 520px;
-}
-@media (max-width: 860px){
-  .historyRow{ flex-direction:column; }
-  .historyRight{ justify-content:flex-start; max-width:100%; }
-}
-
-/* Small pills used by history */
-.pillMini{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:6px 10px;
-  border-radius:999px;
-  border:1px solid var(--border-soft);
-  background: rgba(100,116,139,.08);
-  font-weight: 900;
-  font-size: 12px;
-  white-space: nowrap;
-}
-
-/* Delta colors (used by deltaUp/deltaDown/deltaFlat) */
-.deltaUp{ color: var(--success); font-weight: 950; }
-.deltaDown{ color: var(--danger); font-weight: 950; }
-.deltaFlat{ color: var(--text-muted); font-weight: 900; }
