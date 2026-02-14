@@ -365,6 +365,19 @@ html[data-theme="dark"] .nav a.active{
 
 .btnRow{ display:flex; gap:10px; flex-wrap:wrap; }
 
+/* Button icons (used in View Insights / CTAs) */
+.btnIcon{
+  width: 16px;
+  height: 16px;
+  display: inline-grid;
+  place-items: center;
+}
+.btnIcon svg{
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
 /* Theme toggle */
 .themeToggle{
   width:100%;
