@@ -4,32 +4,69 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Scrummer — AI Ceremony Copilot</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body data-page="workspace">
   <div class="app">
+
     <aside class="sidebar">
       <div class="brand">
-<div class="brandMark" aria-label="Scrummer">
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
-    <path d="M12 12 L19 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-    <circle cx="12" cy="12" r="2" fill="currentColor"/>
-  </svg>
-</div>
+        <div class="brandMark" aria-label="Scrummer">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M12 12 L19 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="12" cy="12" r="2" fill="currentColor"/>
+          </svg>
+        </div>
         <div>
           <div class="brandName">SCRUMMER</div>
           <span class="brandTag">Delivery Intelligence</span>
         </div>
       </div>
+
       <nav class="nav">
-        <a href="index.html" data-page="launchpad"><span class="navIcon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h10M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span> Setup</a>
-        <a href="intelligence.html" data-page="intelligence"><span class="navIcon"><svg viewBox="0 0 24 24" fill="none"><path d="M5 19V10M10 19V5M15 19v-8M20 19v-12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span> Insights</a>
-        <a href="suggestions.html" data-page="suggestions"><span class="navIcon"><svg viewBox="0 0 24 24" fill="none"><path d="M8 12l2.5 2.5L16 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" stroke-width="1.2"/></svg></span> Actions</a>
-        <a href="workspace.html" data-page="workspace"><span class="navIcon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span> AI Ceremony Copilot </a>
+        <a href="index.html" data-page="launchpad">
+          <span class="navIcon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 7h16M4 12h10M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+          Setup
+        </a>
+
+        <a href="intelligence.html" data-page="intelligence">
+          <span class="navIcon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M5 19V10M10 19V5M15 19v-8M20 19v-12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+          Insights
+        </a>
+
+        <a href="suggestions.html" data-page="suggestions">
+          <span class="navIcon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M8 12l2.5 2.5L16 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" stroke-width="1.2"/>
+            </svg>
+          </span>
+          Actions
+        </a>
+
+        <a href="workspace.html" data-page="workspace">
+          <span class="navIcon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+          AI Ceremony Copilot
+        </a>
       </nav>
+
       <div class="sidebarFooter">
         <button id="themeToggle" class="btn themeToggle" type="button" aria-label="Toggle theme">
           <span class="themeLeft">
@@ -40,56 +77,60 @@
         </button>
       </div>
     </aside>
+
     <main class="main">
+
       <header class="topbar">
-        <div>
-          <div class="pageTitle"> AI Ceremony Copilot </div>
+        <div class="topbarLeft">
+          <div class="pageTitle">AI Ceremony Copilot</div>
           <div class="pageSub">Use this during ceremonies (Daily, Planning, Review, Retro). Not part of the 3-step flow.</div>
+
           <div class="brandStrip">
             <div class="brandTagline">Know What’s Happening. Know What To Do Next.</div>
             <div class="brandSub">AI-powered delivery intelligence for modern Agile teams.</div>
           </div>
-          </div>
         </div>
-            </div>
-          </div>
-        </div>
+
         <div class="btnRow"></div>
       </header>
+
       <section class="content">
-<div class="topBrandSub">AI-powered delivery intelligence for modern Agile teams.</div>
-          </div>
-        </div>
+
         <div class="card">
           <div class="cmdTitle">
             <div>
-              <div class="cardTitle"> AI Ceremony Copilot </div>
+              <div class="cardTitle">AI Ceremony Copilot</div>
               <div class="cmdSub">Executive guidance based on your current sprint signals. No integrations required.</div>
             </div>
             <div class="badge" id="copilotRecommended">Recommended: —</div>
           </div>
+
           <div class="mt16 briefGrid">
             <div class="briefKpi">
               <div class="briefLabel">Scope Pressure</div>
               <div id="briefScope" class="briefValue">—</div>
               <div class="briefMeta">Committed ÷ Avg Velocity</div>
             </div>
+
             <div class="briefKpi">
               <div class="briefLabel">Capacity Ratio</div>
               <div id="briefCapRatio" class="briefValue">—</div>
               <div class="briefMeta">Capacity ÷ Avg Velocity</div>
             </div>
+
             <div class="briefKpi">
               <div class="briefLabel">Delivery Confidence</div>
               <div id="briefConf" class="briefValue">—</div>
               <div class="briefMeta">Chance of completing scope</div>
             </div>
+
             <div class="briefKpi">
               <div class="briefLabel">Risk Score</div>
               <div id="briefRisk" class="briefValue">—</div>
               <div id="briefRiskMeta" class="briefMeta">—</div>
             </div>
           </div>
+
           <div class="segTabs" role="tablist" aria-label="Ceremonies">
             <button class="segBtn" data-tab="planning" type="button">Planning <span class="segBadge" id="badgePlanning" style="display:none;">Recommended</span></button>
             <button class="segBtn" data-tab="daily" type="button">Daily <span class="segBadge" id="badgeDaily" style="display:none;">Recommended</span></button>
@@ -98,32 +139,41 @@
             <button class="segBtn" data-tab="retro" type="button">Retro <span class="segBadge" id="badgeRetro" style="display:none;">Recommended</span></button>
           </div>
         </div>
+
         <div class="mt16 grid2">
           <div class="card" id="panelLeft">
             <div class="cardTitle" id="panelTitle">—</div>
             <div class="cmdSub" id="panelWhy">—</div>
+
             <div class="mt16">
               <div class="cardTitle" style="font-size:14px;">Discussion Required</div>
               <ul class="listTight" id="panelList"></ul>
             </div>
+
             <div class="smallHelp" id="storageHelp">
               Saved locally on this device for now (localStorage). Later this will map cleanly to login + cloud history.
             </div>
           </div>
+
           <div class="card" id="panelRight">
             <div class="cardTitle" style="font-size:14px;">Decision Capture</div>
             <p class="cardDesc m0">Keep this structured. It becomes your sprint record later.</p>
+
             <div class="fieldGrid" id="decisionFields"></div>
+
             <div class="mt16 btnRow">
               <button id="copilotSave" class="btn btnPrimary" type="button">Save Decision</button>
               <button id="copilotClear" class="btn" type="button">Clear</button>
             </div>
+
             <div id="copilotMsg" class="cardDesc m0" style="display:none; margin-top:10px;"></div>
           </div>
         </div>
+
       </section>
     </main>
   </div>
+
   <script src="js/metrics.js"></script>
   <script src="js/theme.js"></script>
   <script src="js/shell.js"></script>
