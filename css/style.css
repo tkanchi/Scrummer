@@ -908,3 +908,30 @@ textarea, .textarea{ margin-top:8px; }
 
 
 .nav a.isDisabled{ opacity:.55; pointer-events:none; }
+
+/* =====================================
+   HERO TAGLINE STRIP (Premium Top Banner)
+===================================== */
+
+.heroTag{
+  margin: 14px 0 10px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: var(--card);
+  border: 1px solid var(--border-soft);
+}
+
+.heroTag .heroLine{
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.35px;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+.heroTag .heroSub{
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
