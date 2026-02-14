@@ -958,3 +958,32 @@ html[data-theme="dark"] .actionPill.danger{ color:#fecaca; }
   font-size: 12px;
   line-height: 1.55;
 }
+
+
+/* =========================================================
+   Workspace — selectLike (used by copilot.js)
+   Safe add-on (visual only)
+========================================================= */
+.selectLike{
+  width:100%;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  font-weight: 800;
+  font-size: 13px;
+  transition: border-color var(--trans-fast), box-shadow var(--trans-fast), background var(--trans-fast);
+}
+
+.selectLike:focus{
+  border-color: rgba(37,99,235,.55);
+  box-shadow: 0 0 0 4px rgba(37,99,235,.12);
+}
+
+html[data-theme="dark"] .selectLike:focus{
+  border-color: rgba(96,165,250,.55);
+  box-shadow: 0 0 0 4px rgba(96,165,250,.14);
+}
+
+
