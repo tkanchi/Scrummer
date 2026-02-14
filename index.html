@@ -80,15 +80,14 @@
 
     <main class="main">
 
+      <!-- ✅ Tagline STRIP above Launchpad (Paint reference) -->
+      <div class="heroTag">
+        <div class="heroLine">Know What’s Happening. Know What To Do Next.</div>
+        <div class="heroSub">AI-powered delivery intelligence for modern Agile teams.</div>
+      </div>
+
       <header class="topbar">
         <div class="topbarLeft">
-
-          <!-- ✅ Tagline ON TOP (same pattern as Suggestions) -->
-          <div class="heroTag">
-            <div class="heroLine">Know What’s Happening. Know What To Do Next.</div>
-            <div class="heroSub">AI-powered delivery intelligence for modern Agile teams.</div>
-          </div>
-
           <div class="pageTitle">Launchpad</div>
           <div class="pageSub">Step 1: enter sprint basics.</div>
 
@@ -101,14 +100,12 @@
               <div class="flowStep"><span class="flowDot"></span> Step 3: Actions</div>
             </div>
           </div>
-
         </div>
 
-        <!-- ✅ View Insights CTA (icon + correct color via JS state) -->
+        <!-- ✅ View Insights CTA (icon always visible; color changes via JS state) -->
         <div class="btnRow">
           <a class="btn btnPrimary primaryCtaFixed" href="intelligence.html" id="viewInsightsBtn">
             <span class="btnIcon" aria-hidden="true">
-              <!-- chart icon -->
               <svg viewBox="0 0 24 24" fill="none">
                 <path d="M5 19V10M10 19V5M15 19v-8M20 19v-12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
               </svg>
@@ -116,7 +113,6 @@
             <span id="viewInsightsText">View Insights</span>
           </a>
         </div>
-
       </header>
 
       <section class="content">
@@ -205,7 +201,7 @@
   <script src="js/theme.js"></script>
   <script src="js/shell.js"></script>
 
-  <!-- ✅ Setup gating + View Insights button state (icon stays, styling changes) -->
+  <!-- ✅ Setup gating + View Insights button state -->
   <script>
     (function(){
       const $ = (id) => document.getElementById(id);
@@ -213,15 +209,14 @@
       if (!setup) return;
 
       const fields = ["sprintDays","teamMembers","leaveDays","committedSP","v1","v2","v3"];
-
       const viewBtn = $("viewInsightsBtn");
       const viewText = $("viewInsightsText");
 
       function hasSavedSetup(){
-        try{ return localStorage.getItem('scrummer.setupSaved') === '1'; }catch(e){ return false; }
+        try{ return localStorage.getItem("scrummer.setupSaved") === "1"; }catch(e){ return false; }
       }
 
-      // Expose hook for demo loader script
+      // Hook for demo loader
       window.__scrummerUpdateNav = updateInsightsBtn;
 
       function updateInsightsBtn(){
@@ -232,7 +227,6 @@
           viewBtn.classList.add("btnPrimary");
           viewText.textContent = "View Insights";
         } else {
-          // ✅ subtle when not saved (still clickable but blocked)
           viewBtn.classList.remove("btnPrimary");
           viewBtn.classList.add("btnSubtle");
           viewText.textContent = "View Insights (save setup)";
@@ -253,7 +247,7 @@
       }
 
       // Block navigation unless saved
-      viewBtn?.addEventListener('click', (e)=>{
+      viewBtn?.addEventListener("click", (e)=>{
         if (!hasSavedSetup()){
           e.preventDefault();
           showMsg("Please click Save & Continue first.");
@@ -264,7 +258,7 @@
         const data = {};
         fields.forEach(k => data[k] = $(k) ? $(k).value : "");
         setup.saveSetup(data);
-        try{ localStorage.setItem('scrummer.setupSaved','1'); }catch(e){}
+        try{ localStorage.setItem("scrummer.setupSaved","1"); }catch(e){}
         updateInsightsBtn();
         showMsg("Saved. Redirecting to Insights…");
         window.location.href = "intelligence.html";
@@ -273,7 +267,7 @@
       $("resetSetup")?.addEventListener("click", () => {
         setup.saveSetup({});
         fields.forEach(k => { if ($(k)) $(k).value = ""; });
-        try{ localStorage.removeItem('scrummer.setupSaved'); }catch(e){}
+        try{ localStorage.removeItem("scrummer.setupSaved"); }catch(e){}
         updateInsightsBtn();
         showMsg("Reset complete.");
       });
@@ -285,50 +279,50 @@
 
   <!-- ✅ Demo Data -->
   <script>
-  (function(){
-    const $ = (id)=>document.getElementById(id);
-    const setupApi = window.Scrummer?.setup;
-    if(!setupApi) return;
+    (function(){
+      const $ = (id)=>document.getElementById(id);
+      const setupApi = window.Scrummer?.setup;
+      if(!setupApi) return;
 
-    const ids = {
-      sprintDays: "sprintDays",
-      teamMembers: "teamMembers",
-      leaveDays: "leaveDays",
-      committedSP: "committedSP",
-      v1: "v1", v2: "v2", v3: "v3"
-    };
+      const ids = {
+        sprintDays: "sprintDays",
+        teamMembers: "teamMembers",
+        leaveDays: "leaveDays",
+        committedSP: "committedSP",
+        v1: "v1", v2: "v2", v3: "v3"
+      };
 
-    function applyDemo(data){
-      Object.keys(ids).forEach(k=>{
-        const el = $(ids[k]);
-        if(el) el.value = (data[k] ?? "");
-      });
-      setupApi.saveSetup(data);
-      try{ localStorage.setItem("scrummer.setupSaved","1"); }catch(e){}
+      function applyDemo(data){
+        Object.keys(ids).forEach(k=>{
+          const el = $(ids[k]);
+          if(el) el.value = (data[k] ?? "");
+        });
+        setupApi.saveSetup(data);
+        try{ localStorage.setItem("scrummer.setupSaved","1"); }catch(e){}
 
-      const msg = $("setupMsg");
-      if(msg){
-        msg.style.display="block";
-        msg.textContent="Demo loaded. Click View Insights.";
-        setTimeout(()=>{ msg.style.display="none"; }, 1600);
+        const msg = $("setupMsg");
+        if(msg){
+          msg.style.display="block";
+          msg.textContent="Demo loaded. Click View Insights.";
+          setTimeout(()=>{ msg.style.display="none"; }, 1600);
+        }
+
+        if (typeof window.__scrummerUpdateNav === "function") window.__scrummerUpdateNav();
       }
 
-      if (typeof window.__scrummerUpdateNav === "function") window.__scrummerUpdateNav();
-    }
-
-    $("demoExcellent")?.addEventListener("click", ()=>applyDemo({
-      sprintDays: 10, teamMembers: 8, leaveDays: 1,
-      committedSP: 60, v1: 62, v2: 60, v3: 61
-    }));
-    $("demoNormal")?.addEventListener("click", ()=>applyDemo({
-      sprintDays: 10, teamMembers: 7, leaveDays: 3,
-      committedSP: 70, v1: 66, v2: 72, v3: 68
-    }));
-    $("demoRisky")?.addEventListener("click", ()=>applyDemo({
-      sprintDays: 10, teamMembers: 6, leaveDays: 8,
-      committedSP: 90, v1: 55, v2: 60, v3: 50
-    }));
-  })();
+      $("demoExcellent")?.addEventListener("click", ()=>applyDemo({
+        sprintDays: 10, teamMembers: 8, leaveDays: 1,
+        committedSP: 60, v1: 62, v2: 60, v3: 61
+      }));
+      $("demoNormal")?.addEventListener("click", ()=>applyDemo({
+        sprintDays: 10, teamMembers: 7, leaveDays: 3,
+        committedSP: 70, v1: 66, v2: 72, v3: 68
+      }));
+      $("demoRisky")?.addEventListener("click", ()=>applyDemo({
+        sprintDays: 10, teamMembers: 6, leaveDays: 8,
+        committedSP: 90, v1: 55, v2: 60, v3: 50
+      }));
+    })();
   </script>
 
 </body>
