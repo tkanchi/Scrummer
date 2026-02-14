@@ -986,4 +986,37 @@ html[data-theme="dark"] .selectLike:focus{
   box-shadow: 0 0 0 4px rgba(96,165,250,.14);
 }
 
+/* ================================
+   Hero Tagline — Compact Version
+   ================================ */
+
+.topbarLeft .heroTag{
+  margin: 0 0 8px 0;
+  padding: 8px 12px;
+  border-radius: 12px;
+
+  /* softer, less dominant */
+  background: rgba(37,99,235,.05);
+  border: 1px solid rgba(37,99,235,.12);
+  box-shadow: none;
+}
+
+html[data-theme="dark"] .topbarLeft .heroTag{
+  background: rgba(96,165,250,.08);
+  border-color: rgba(96,165,250,.18);
+}
+
+.topbarLeft .heroTag .heroLine{
+  font-size: 14px;      /* reduced from 18 */
+  font-weight: 800;     /* slightly lighter */
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+}
+
+.topbarLeft .heroTag .heroSub{
+  margin-top: 3px;
+  font-size: 11px;      /* smaller */
+  font-weight: 600;
+  line-height: 1.3;
+}
 
