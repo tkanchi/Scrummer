@@ -1,9 +1,11 @@
 /* =========================================================
    SCRUMMER — Premium Futuristic (Light-first) + Guided Flow
-   Drop-in replacement for css/style.css
+   Drop-in replacement for css/style.css  (FINAL)
    ========================================================= */
 
-/* Light (default) */
+/* -----------------------------
+   Light theme variables
+------------------------------ */
 :root{
   --bg-primary:#f5f7fb;
   --bg-secondary:#ffffff;
@@ -20,42 +22,36 @@
   --danger:#dc2626;
 
   --border-soft:#e2e8f0;
+  --border-strong: rgba(37,99,235,.28);
 
-  /* ✅ missing variables (required by your CSS below) */
+  /* aliases used by some blocks */
   --card: var(--bg-secondary);
   --text: var(--text-primary);
-  --border-strong: rgba(37,99,235,.28);
 
   --shadow-sm: 0 2px 10px rgba(15,23,42,.04);
   --shadow-md: 0 8px 22px rgba(15,23,42,.06);
   --shadow-lg: 0 18px 44px rgba(15,23,42,.08);
 
-  --radius-lg:14px;
-  --radius-md:10px;
-  --radius-sm:8px;
+  --radius-lg:16px;
+  --radius-md:12px;
+  --radius-sm:10px;
 
   --sidebar-w: 268px;
   --content-max: 1200px;
 
   --trans-fast: .14s ease;
   --trans-med: .22s ease;
+
+  --glass: rgba(255,255,255,.75);
+  --glass-2: rgba(255,255,255,.55);
+
+  --chip-bg: rgba(37,99,235,.06);
+  --chip-bd: rgba(37,99,235,.16);
 }
 
 /* -----------------------------
-   Typography + consistency
+   Dark theme variables
 ------------------------------ */
-html{ font-size:14px; }
-body{
-  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--text-primary);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-button, input, select, textarea{ font-family: inherit; font-size: inherit; }
-
-/* Dark (optional) */
 html[data-theme="dark"]{
   --bg-primary:#0b1220;
   --bg-secondary:#0f1a2e;
@@ -68,37 +64,50 @@ html[data-theme="dark"]{
   --accent-strong:#3b82f6;
 
   --border-soft: rgba(255,255,255,.10);
+  --border-strong: rgba(96,165,250,.28);
 
-  /* ✅ matching required variables */
   --card: var(--bg-secondary);
   --text: var(--text-primary);
-  --border-strong: rgba(96,165,250,.28);
 
   --shadow-sm: 0 2px 14px rgba(0,0,0,.25);
   --shadow-md: 0 12px 34px rgba(0,0,0,.35);
   --shadow-lg: 0 22px 60px rgba(0,0,0,.45);
+
+  --glass: rgba(15,26,46,.66);
+  --glass-2: rgba(15,26,46,.50);
+
+  --chip-bg: rgba(96,165,250,.10);
+  --chip-bd: rgba(96,165,250,.18);
 }
 
-/* Base */
+/* -----------------------------
+   Base + typography
+------------------------------ */
 *{ box-sizing:border-box; }
 html, body{ height:100%; }
+html{ font-size:14px; }
 body{
   margin:0;
   background: var(--bg-primary);
   color: var(--text-primary);
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 a{ color:inherit; text-decoration:none; }
-button, input, textarea{ font: inherit; }
+button, input, select, textarea{ font: inherit; }
 
 :focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
 ::selection{ background: rgba(37,99,235,.18); }
+html[data-theme="dark"] ::selection{ background: rgba(96,165,250,.18); }
 
-/* Inputs */
-input, textarea{
+/* -----------------------------
+   Inputs
+------------------------------ */
+input, textarea, select{
   width:100%;
   border: 1px solid var(--border-soft);
   background: var(--bg-secondary);
@@ -111,18 +120,24 @@ input::placeholder, textarea::placeholder{ color: rgba(100,116,139,.85); }
 html[data-theme="dark"] input::placeholder,
 html[data-theme="dark"] textarea::placeholder{ color: rgba(152,162,179,.75); }
 
-input:focus, textarea:focus{
+input:focus, textarea:focus, select:focus{
   border-color: rgba(37,99,235,.55);
   box-shadow: 0 0 0 4px rgba(37,99,235,.12);
 }
 html[data-theme="dark"] input:focus,
-html[data-theme="dark"] textarea:focus{
+html[data-theme="dark"] textarea:focus,
+html[data-theme="dark"] select:focus{
   border-color: rgba(96,165,250,.55);
   box-shadow: 0 0 0 4px rgba(96,165,250,.14);
 }
 
-/* Shell layout */
-.app{ display:flex; min-height:100vh; }
+/* -----------------------------
+   Shell layout
+------------------------------ */
+.app{
+  display:flex;
+  min-height:100vh;
+}
 
 .sidebar{
   width: var(--sidebar-w);
@@ -134,9 +149,16 @@ html[data-theme="dark"] textarea:focus{
   border-right: 1px solid var(--border-soft);
 }
 
-.main{ flex:1; display:flex; flex-direction:column; min-width:0; }
+.main{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
 
-/* Topbar */
+/* -----------------------------
+   Topbar
+------------------------------ */
 .topbar{
   display:flex;
   flex-wrap:wrap;
@@ -146,24 +168,21 @@ html[data-theme="dark"] textarea:focus{
 
   padding:18px 22px;
   border-bottom:1px solid var(--border-soft);
-  background: rgba(255,255,255,.75);
+  background: var(--glass);
   backdrop-filter: blur(10px);
 }
-html[data-theme="dark"] .topbar{ background: rgba(15,26,46,.65); }
 
-/* ✅ Keep left side aligned to content column */
 .topbarLeft{
   width: 100%;
   max-width: var(--content-max);
   margin: 0 auto;
 }
 
-/* Content */
 .content{
   width:100%;
   max-width: var(--content-max);
   padding:22px;
-  margin: 0 auto; /* ✅ fixes “below sidebar” / misalignment look */
+  margin: 0 auto;
 }
 
 /* Responsive */
@@ -178,8 +197,15 @@ html[data-theme="dark"] .topbar{ background: rgba(15,26,46,.65); }
   }
 }
 
-/* Brand */
-.brand{ display:flex; align-items:center; gap:12px; padding:10px 10px 18px; }
+/* -----------------------------
+   Brand
+------------------------------ */
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px 10px 18px;
+}
 
 .brandMark{
   width: 36px;
@@ -208,15 +234,21 @@ html[data-theme="dark"] .topbar{ background: rgba(15,26,46,.65); }
   font-weight: 600;
 }
 
-/* Nav */
-.nav{ display:flex; flex-direction:column; gap:6px; padding:8px; }
+/* -----------------------------
+   Nav
+------------------------------ */
+.nav{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  padding:8px;
+}
 
 .nav a{
   position:relative;
   display:flex;
   align-items:center;
   gap:10px;
-
   padding:10px 12px;
   border-radius:12px;
 
@@ -258,6 +290,8 @@ html[data-theme="dark"] .nav a.active{
   border-radius: 4px;
 }
 
+.nav a.isDisabled{ opacity:.55; pointer-events:none; }
+
 .navIcon{
   width: 22px;
   height: 22px;
@@ -267,9 +301,8 @@ html[data-theme="dark"] .nav a.active{
   border:1px solid var(--border-soft);
   background: var(--bg-secondary);
   color: var(--text-muted);
-  font-size: 12px;
+  padding:0;
 }
-.navIcon{ padding:0; }
 .navIcon svg{ width:14px; height:14px; display:block; }
 
 /* Sidebar footer */
@@ -282,100 +315,11 @@ html[data-theme="dark"] .nav a.active{
   border-top:1px solid var(--border-soft);
 }
 @media (max-width: 720px){
-  .sidebarFooter{ position:relative; left:0; right:0; bottom:0; margin-top:12px; }
-}
-
-/* Typography */
-.pageTitle{
-  font-size: 20px;
-  font-weight:800;
-  letter-spacing: -0.3px;
-}
-.pageSub{
-  margin-top:4px;
-  font-size:13px;
-  color: var(--text-muted);
-  font-weight: 600;
-}
-
-.cardTitle{
-  font-weight:700;
-  font-size: 15px;
-  letter-spacing: -0.1px;
-}
-.cardDesc{
-  margin-top:6px;
-  color: var(--text-muted);
-  font-size: 13px;
-  font-weight: 500;
-}
-
-/* Cards */
-.card{
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius-lg);
-  padding: 18px;
-  box-shadow: var(--shadow-sm);
-  transition: transform var(--trans-med), box-shadow var(--trans-med), border-color var(--trans-med);
-}
-.card:hover{ transform: translateY(-2px); box-shadow: var(--shadow-md); }
-
-.cardHeader{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:12px;
-  margin-bottom:12px;
-}
-
-/* Buttons */
-.btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-
-  padding:10px 12px;
-  border-radius: var(--radius-md);
-
-  border: 1px solid var(--border-soft);
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-
-  font-weight: 750;
-  font-size: 13px;
-  cursor: pointer;
-
-  transition: transform var(--trans-fast), box-shadow var(--trans-fast), background var(--trans-fast), border-color var(--trans-fast);
-}
-.btn:hover{ transform: translateY(-1px); background: var(--bg-elevated); box-shadow: var(--shadow-sm); }
-.btn:active{ transform: translateY(0); }
-
-.btnPrimary{
-  border:none;
-  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-  color:#fff;
-  box-shadow: 0 8px 18px rgba(37,99,235,.18);
-}
-.btnPrimary:hover{
-  background: linear-gradient(135deg, var(--accent-strong), var(--accent));
-  box-shadow: 0 12px 22px rgba(37,99,235,.24);
-}
-
-.btnRow{ display:flex; gap:10px; flex-wrap:wrap; }
-
-/* Button icons (used in View Insights / CTAs) */
-.btnIcon{
-  width: 16px;
-  height: 16px;
-  display: inline-grid;
-  place-items: center;
-}
-.btnIcon svg{
-  width: 16px;
-  height: 16px;
-  display: block;
+  .sidebarFooter{
+    position:relative;
+    left:0; right:0; bottom:0;
+    margin-top:12px;
+  }
 }
 
 /* Theme toggle */
@@ -393,20 +337,170 @@ html[data-theme="dark"] .nav a.active{
 .themeLabel{ font-weight: 850; font-size:13px; }
 .themeMode{ font-size:12px; font-weight: 750; color: var(--text-muted); }
 
-/* Grids */
+/* -----------------------------
+   Typography helpers
+------------------------------ */
+.pageTitle{
+  font-size: 20px;
+  font-weight:800;
+  letter-spacing: -0.3px;
+}
+.pageSub{
+  margin-top:4px;
+  font-size:13px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.heroTitle{
+  margin: 0;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -0.25px;
+}
+
+.cardTitle{
+  font-weight:800;
+  font-size: 15px;
+  letter-spacing: -0.1px;
+}
+.cardDesc{
+  margin-top:6px;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* -----------------------------
+   Tagline strip (consistent)
+   Put .heroTag INSIDE .topbarLeft on all tabs
+------------------------------ */
+.heroTag{
+  margin: 0 0 12px 0;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: var(--card);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-sm);
+}
+.heroTag .heroLine{
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -0.35px;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+.heroTag .heroSub{
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--text-muted);
+}
+
+/* -----------------------------
+   Cards
+------------------------------ */
+.card{
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--trans-med), box-shadow var(--trans-med), border-color var(--trans-med);
+}
+.card:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.cardHeader{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+/* -----------------------------
+   Buttons
+------------------------------ */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+
+  padding:10px 12px;
+  border-radius: var(--radius-md);
+
+  border: 1px solid var(--border-soft);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+
+  transition: transform var(--trans-fast), box-shadow var(--trans-fast), background var(--trans-fast), border-color var(--trans-fast);
+}
+.btn:hover{
+  transform: translateY(-1px);
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-sm);
+}
+.btn:active{ transform: translateY(0); }
+
+.btnPrimary{
+  border:none;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color:#fff;
+  box-shadow: 0 8px 18px rgba(37,99,235,.18);
+}
+html[data-theme="dark"] .btnPrimary{
+  box-shadow: 0 10px 22px rgba(0,0,0,.25);
+}
+.btnPrimary:hover{
+  background: linear-gradient(135deg, var(--accent-strong), var(--accent));
+  box-shadow: 0 12px 22px rgba(37,99,235,.24);
+}
+
+.btnSubtle{
+  background: rgba(100,116,139,.10);
+  border-color: rgba(100,116,139,.22);
+  color: var(--text-primary);
+}
+html[data-theme="dark"] .btnSubtle{
+  background: rgba(152,162,179,.10);
+  border-color: rgba(152,162,179,.18);
+}
+
+.btnRow{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+
+.btnIcon{
+  width: 16px;
+  height: 16px;
+  display: inline-grid;
+  place-items: center;
+}
+.btnIcon svg{ width:16px; height:16px; display:block; }
+
+/* -----------------------------
+   Grids + spacing helpers
+------------------------------ */
 .grid2{ display:grid; grid-template-columns: 1fr 420px; gap:16px; }
 .grid4{ display:grid; grid-template-columns: repeat(4, 1fr); gap:16px; }
 
 @media (max-width: 1100px){ .grid4{ grid-template-columns: repeat(2,1fr); } }
 @media (max-width: 860px){ .grid2{ grid-template-columns: 1fr; } }
 
-/* Helpers */
 .m0{ margin:0; }
 .mt8{ margin-top:8px; }
 .mt12{ margin-top:12px; }
 .mt16{ margin-top:16px; }
+.sectionGap{ margin-top:14px; }
 
-/* Guided flow stepper */
+/* -----------------------------
+   Guided flow stepper
+------------------------------ */
 .flowWrap{ margin-top:10px; }
 .flowSteps{
   display:flex;
@@ -423,17 +517,18 @@ html[data-theme="dark"] .nav a.active{
   border:1px solid var(--border-soft);
   background: var(--bg-secondary);
   color: var(--text-muted);
-  font-weight: 800;
+  font-weight: 900;
   font-size:12px;
 }
 .flowDot{
-  width:10px; height:10px; border-radius:999px;
+  width:10px; height:10px;
+  border-radius:999px;
   border:2px solid rgba(100,116,139,.5);
 }
 .flowStep.is-active{
   color: var(--text-primary);
-  border-color: rgba(37,99,235,.28);
-  background: rgba(37,99,235,.10);
+  border-color: var(--border-strong);
+  background: var(--chip-bg);
 }
 .flowStep.is-active .flowDot{
   border-color: var(--accent);
@@ -444,235 +539,9 @@ html[data-theme="dark"] .nav a.active{
   font-weight: 900;
 }
 
-/* ===== HERO TAGLINE STRIP (Paint reference) ===== */
-.heroTag{
-  margin: 0 0 12px 0;
-  padding: 14px 16px;
-  border-radius: 16px;
-  background: var(--card);
-  border: 1px solid var(--border-soft);
-}
-.heroTag .heroLine{
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: -0.35px;
-  line-height: 1.2;
-  color: var(--text-primary);
-}
-.heroTag .heroSub{
-  margin-top: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-/* Disabled nav link */
-.nav a.isDisabled{ opacity:.55; pointer-events:none; }
-
-/* ===============================
-   Copilot polish: selects + tabs
-   Paste at END of style.css
-================================ */
-
-/* Native select styling (copilot renders selects) */
-select{
-  width:100%;
-  border: 1px solid var(--border-soft);
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  border-radius: var(--radius-md);
-  padding: 10px 12px;
-  font-weight: 750;
-  outline: none;
-  transition: border-color var(--trans-fast), box-shadow var(--trans-fast), background var(--trans-fast);
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-select:focus{
-  border-color: rgba(37,99,235,.55);
-  box-shadow: 0 0 0 4px rgba(37,99,235,.12);
-}
-html[data-theme="dark"] select:focus{
-  border-color: rgba(96,165,250,.55);
-  box-shadow: 0 0 0 4px rgba(96,165,250,.14);
-}
-
-/* Make segmented tabs behave on mobile */
-.segTabs{
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-.segTabs::-webkit-scrollbar{ display:none; }
-
-/* Ensure seg buttons look premium in dark mode too */
-.segBtn{
-  white-space: nowrap;
-  color: var(--text-muted);
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-soft);
-}
-.segBtn.active{
-  color: var(--text-primary);
-  background: var(--bg-elevated);
-  border-color: var(--border-strong);
-}
-
-/* Badge chip readability */
-.badge{
-  color: var(--text-muted);
-  background: transparent;
-}
-
 /* =========================================================
-   WORKSPACE (AI CEREMONY COPILOT) — FORCE STYLES
-   Paste this at the VERY END of style.css
+   Intelligence page components
    ========================================================= */
-
-body[data-page="workspace"]{
-  background: var(--bg-primary);
-  color: var(--text-primary);
-}
-
-/* Ensure main area uses the app background (not white) */
-body[data-page="workspace"] .main{
-  background: var(--bg-primary);
-}
-
-/* Make content column centered + padded properly */
-body[data-page="workspace"] .content{
-  width: 100%;
-  max-width: var(--content-max);
-  margin: 0 auto;
-  padding: 22px;
-}
-
-/* Make cards look premium */
-body[data-page="workspace"] .card{
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-}
-
-/* KPIs must show as a grid (your screenshot shows they’re collapsing) */
-body[data-page="workspace"] .briefGrid{
-  display: grid !important;
-  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-  gap: 10px !important;
-  margin-top: 14px !important;
-}
-@media (max-width: 980px){
-  body[data-page="workspace"] .briefGrid{
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  }
-}
-@media (max-width: 520px){
-  body[data-page="workspace"] .briefGrid{
-    grid-template-columns: 1fr !important;
-  }
-}
-
-body[data-page="workspace"] .briefKpi{
-  padding: 12px !important;
-  border-radius: 14px !important;
-  border: 1px solid var(--border-soft) !important;
-  background: var(--bg-elevated) !important;
-}
-body[data-page="workspace"] .briefLabel{
-  font-size: 12px !important;
-  font-weight: 850 !important;
-  color: var(--text-muted) !important;
-}
-body[data-page="workspace"] .briefValue{
-  margin-top: 6px !important;
-  font-size: 20px !important;
-  font-weight: 900 !important;
-  color: var(--text-primary) !important;
-}
-body[data-page="workspace"] .briefMeta{
-  margin-top: 2px !important;
-  font-size: 12px !important;
-  color: var(--text-muted) !important;
-  font-weight: 650 !important;
-}
-
-/* Segmented tabs must look like pills (your screenshot looks like default buttons) */
-body[data-page="workspace"] .segTabs{
-  display: flex !important;
-  gap: 8px !important;
-  flex-wrap: nowrap !important;
-  overflow-x: auto !important;
-  -webkit-overflow-scrolling: touch;
-  padding-top: 12px !important;
-  scrollbar-width: none;
-}
-body[data-page="workspace"] .segTabs::-webkit-scrollbar{ display:none; }
-
-body[data-page="workspace"] .segBtn{
-  border: 1px solid var(--border-soft) !important;
-  background: var(--bg-secondary) !important;
-  color: var(--text-muted) !important;
-  padding: 8px 12px !important;
-  border-radius: 999px !important;
-  font-weight: 850 !important;
-  font-size: 12px !important;
-  cursor: pointer !important;
-  white-space: nowrap !important;
-  transition: transform .12s ease, background .12s ease, border-color .12s ease, color .12s ease;
-}
-body[data-page="workspace"] .segBtn:hover{
-  transform: translateY(-1px) !important;
-  background: var(--bg-elevated) !important;
-}
-body[data-page="workspace"] .segBtn.active{
-  color: var(--text-primary) !important;
-  background: rgba(37,99,235,.10) !important;
-  border-color: var(--border-strong) !important;
-}
-
-/* Badge readability */
-body[data-page="workspace"] .badge{
-  border: 1px solid var(--border-soft) !important;
-  border-radius: 999px !important;
-  padding: 6px 10px !important;
-  background: var(--bg-secondary) !important;
-  color: var(--text-muted) !important;
-  font-size: 12px !important;
-  font-weight: 750 !important;
-}
-
-/* IMPORTANT: copilot generates SELECT fields — style them (white dropdowns were breaking UI) */
-body[data-page="workspace"] select{
-  width:100% !important;
-  border: 1px solid var(--border-soft) !important;
-  background: var(--bg-secondary) !important;
-  color: var(--text-primary) !important;
-  border-radius: var(--radius-md) !important;
-  padding: 10px 12px !important;
-  font-weight: 750 !important;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-body[data-page="workspace"] select:focus{
-  border-color: rgba(37,99,235,.55) !important;
-  box-shadow: 0 0 0 4px rgba(37,99,235,.12) !important;
-  outline: none !important;
-}
-
-@media (max-width: 820px){
-  .grid4{ grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 520px){
-  .grid4{ grid-template-columns: 1fr; }
-}
-
-/* ===============================
-   Intelligence UI components
-   (missing styles fix)
-================================ */
 
 /* Banner */
 .banner{
@@ -681,101 +550,268 @@ body[data-page="workspace"] select:focus{
   justify-content:space-between;
   gap:14px;
   padding:14px 16px;
-  border-radius: var(--radius-lg);
-  background: rgba(37,99,235,.10);
-  border:1px solid rgba(37,99,235,.22);
+  border-radius: 16px;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-secondary);
+  box-shadow: var(--shadow-sm);
 }
-html[data-theme="dark"] .banner{
-  background: rgba(96,165,250,.12);
-  border-color: rgba(96,165,250,.22);
+.bannerTitle{
+  font-weight: 950;
+  letter-spacing: -0.2px;
 }
-.bannerTitle{ font-weight: 850; font-size: 14px; }
-.bannerText{ color: var(--text-muted); line-height: 1.5; }
+.bannerText{
+  margin-top:6px;
+  color: var(--text-muted);
+  font-weight: 600;
+  line-height: 1.55;
+}
 
 /* Badge */
 .badge{
   display:inline-flex;
   align-items:center;
-  gap:8px;
-  padding:8px 10px;
+  justify-content:center;
+  padding: 7px 10px;
   border-radius: 999px;
-  border:1px solid var(--border-soft);
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  font-weight: 800;
+  border: 1px solid var(--border-soft);
+  background: rgba(100,116,139,.08);
+  font-weight: 900;
   font-size: 12px;
+  white-space: nowrap;
 }
 
-/* KPI cards */
-.kpiValue{
-  margin-top:8px;
-  font-size: 22px;
-  font-weight: 900;
-  letter-spacing: -0.3px;
+/* KPI */
+.kpi .kpiValue{
+  font-size: 26px;
+  font-weight: 950;
+  letter-spacing: -0.35px;
+  margin-top: 6px;
 }
-.kpiMeta{
+.kpi .kpiMeta{
   margin-top:4px;
   color: var(--text-muted);
+  font-weight: 650;
   font-size: 12px;
-  font-weight: 600;
 }
 
 /* Bars */
 .bar{
   width:100%;
-  height:10px;
+  height: 10px;
   border-radius: 999px;
-  background: rgba(100,116,139,.18);
+  background: rgba(100,116,139,.12);
+  border: 1px solid rgba(100,116,139,.14);
   overflow:hidden;
-  border:1px solid rgba(100,116,139,.18);
 }
 .barFill{
   height:100%;
   width:0%;
   border-radius: 999px;
   background: linear-gradient(90deg, var(--accent), var(--accent-strong));
-  transition: width .4s ease;
 }
 
-/* Formula chips row */
-.formulaRow{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top: 12px;
-}
-.formulaChip{
-  padding:8px 10px;
-  border-radius: 999px;
-  border:1px solid var(--border-soft);
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  font-weight: 700;
-  font-size: 12px;
-}
-.formulaChip b{ font-weight: 900; }
-
-/* Risk signal chips */
+/* Risk signal chip */
 .chip{
   display:flex;
   align-items:center;
   gap:10px;
-  padding:10px 12px;
+  padding: 10px 12px;
   border-radius: 14px;
-  border:1px solid var(--border-soft);
+  border: 1px solid var(--border-soft);
   background: var(--bg-secondary);
-  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+  font-weight: 800;
 }
 .chipDot{
-  width:10px;
-  height:10px;
+  width:10px; height:10px;
   border-radius:999px;
   background: var(--accent);
-  box-shadow: 0 0 0 4px rgba(37,99,235,.12);
-}
-html[data-theme="dark"] .chipDot{
-  box-shadow: 0 0 0 4px rgba(96,165,250,.14);
+  flex: 0 0 auto;
 }
 
-/* Spacing helpers used in Intelligence */
-.sectionGap{ margin-top: 12px; }
+/* Formula chips row */
+.formulaRow{
+  margin-top: 12px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.formulaChip{
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border-soft);
+  background: rgba(100,116,139,.07);
+  font-weight: 800;
+  color: var(--text-primary);
+}
+.formulaChip b{ font-weight: 950; }
+
+/* =========================================================
+   Workspace / Copilot components
+   ========================================================= */
+
+.cmdTitle{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+}
+.cmdSub{
+  margin-top:6px;
+  color: var(--text-muted);
+  font-weight: 650;
+  line-height: 1.55;
+}
+
+.briefGrid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+@media (max-width: 980px){
+  .briefGrid{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 520px){
+  .briefGrid{ grid-template-columns: 1fr; }
+}
+
+.briefKpi{
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border-soft);
+  background: rgba(100,116,139,.06);
+}
+.briefLabel{ color: var(--text-muted); font-weight: 750; font-size:12px; }
+.briefValue{ font-size: 18px; font-weight: 950; margin-top:4px; }
+.briefMeta{ color: var(--text-muted); font-weight: 650; font-size:12px; margin-top:2px; }
+
+/* Segmented tabs */
+.segTabs{
+  margin-top: 14px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  padding: 8px;
+  border-radius: 16px;
+  border: 1px solid var(--border-soft);
+  background: rgba(100,116,139,.06);
+}
+.segBtn{
+  border: 1px solid var(--border-soft);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-radius: 12px;
+  padding: 9px 12px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform var(--trans-fast), background var(--trans-fast), border-color var(--trans-fast);
+}
+.segBtn:hover{ transform: translateY(-1px); background: var(--bg-elevated); }
+.segBtn.is-active{
+  border-color: var(--border-strong);
+  background: var(--chip-bg);
+}
+.segBadge{
+  margin-left: 8px;
+  font-size: 11px;
+  font-weight: 950;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--chip-bd);
+  background: var(--chip-bg);
+}
+
+/* Lists */
+.listTight{
+  margin: 10px 0 0 18px;
+  padding: 0;
+  display:grid;
+  gap:8px;
+}
+.listTight li{
+  color: var(--text-primary);
+  font-weight: 650;
+  line-height: 1.55;
+}
+
+/* Field grids */
+.fieldGrid{
+  margin-top: 12px;
+  display:grid;
+  gap:10px;
+}
+.smallHelp{
+  margin-top: 12px;
+  color: var(--text-muted);
+  font-weight: 650;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+/* =========================================================
+   “Notepad look” fix — Drivers + History rows
+   (used by your JS rendering)
+   ========================================================= */
+
+.driverItem, .historyItem{
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  padding: 14px 14px;
+  box-shadow: var(--shadow-sm);
+}
+.driverHead, .historyHead{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+}
+.driverTitle{
+  font-weight: 950;
+  font-size: 14px;
+}
+.driverMeta{
+  margin-top:6px;
+  color: var(--text-muted);
+  font-weight: 650;
+  line-height: 1.55;
+}
+.historyBody{
+  margin-top:10px;
+  color: var(--text-primary);
+  font-weight: 650;
+  line-height: 1.6;
+}
+.historyBody b{ font-weight: 950; }
+
+/* Pills (red / amber / green) */
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border-soft);
+  background: rgba(100,116,139,.08);
+  font-weight: 950;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.pill--red{
+  border-color: rgba(220,38,38,.35);
+  background: rgba(220,38,38,.12);
+  color: #b91c1c;
+}
+.pill--amber{
+  border-color: rgba(245,158,11,.35);
+  background: rgba(245,158,11,.12);
+  color: #b45309;
+}
+.pill--green{
+  border-color: rgba(22,163,74,.35);
+  background: rgba(22,163,74,.12);
+  color: #15803d;
+}
+html[data-theme="dark"] .pill--red{ color:#fecaca; }
+html[data-theme="dark"] .pill--amber{ color:#fde68a; }
+html[data-theme="dark"] .pill--green{ color:#bbf7d0; }
