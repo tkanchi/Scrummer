@@ -22,3 +22,19 @@
     setActive("planning");
   }
 })();
+
+(function () {
+  const host = document.querySelector(".topbarLeft");
+  if (!host) return;
+
+  // avoid duplicates
+  if (host.querySelector(".heroTag")) return;
+
+  const tag = document.createElement("div");
+  tag.className = "heroTag";
+  tag.innerHTML = `
+    <div class="heroLine">Know What’s Happening. Know What To Do Next.</div>
+    <div class="heroSub">AI-powered delivery intelligence for modern Agile teams.</div>
+  `;
+  host.prepend(tag);
+})();
