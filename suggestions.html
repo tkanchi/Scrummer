@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Scrummer — Suggestions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="suggestions">
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+<div class="brandMark" aria-label="Scrummer">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
+    <path d="M12 12 L19 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="12" cy="12" r="2" fill="currentColor"/>
+  </svg>
+</div>
+        <div>
+          <div class="brandName">SCRUMMER</div>
+          <span class="brandTag">Delivery Intelligence</span>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="index.html" data-page="launchpad"><span class="navIcon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h10M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span> Setup</a>
+        <a href="intelligence.html" data-page="intelligence"><span class="navIcon"><svg viewBox="0 0 24 24" fill="none"><path d="M5 19V10M10 19V5M15 19v-8M20 19v-12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span> Insights</a>
+        <a href="suggestions.html" data-page="suggestions"><span class="navIcon"><svg viewBox="0 0 24 24" fill="none"><path d="M8 12l2.5 2.5L16 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" stroke-width="1.2"/></svg></span> Actions</a>
+        <a href="workspace.html" data-page="workspace"><span class="navIcon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span> AI Ceremony Copilot </a>
+      </nav>
+      <div class="sidebarFooter">
+        <button id="themeToggle" class="btn themeToggle" type="button" aria-label="Toggle theme">
+          <span class="themeLeft">
+            <span class="themeDot" aria-hidden="true"></span>
+            <span class="themeLabel">Theme</span>
+          </span>
+          <span id="themeMode" class="themeMode">—</span>
+        </button>
+      </div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="pageTitle">Suggestions</div>
+          <div class="pageSub">Actionable next steps based on your signals.</div>
+          <div class="brandStrip">
+            <div class="brandTagline">Know What’s Happening. Know What To Do Next.</div>
+            <div class="brandSub">AI-powered delivery intelligence for modern Agile teams.</div>
+          </div>
+          <div class="flowWrap">
+            <div class="flowSteps" aria-label="Guided flow">
+              <div class="flowStep "><span class="flowDot"></span> Step 1: Setup</div>
+              <div class="flowArrow">→</div>
+              <div class="flowStep "><span class="flowDot"></span> Step 2: Insights</div>
+              <div class="flowArrow">→</div>
+              <div class="flowStep is-active"><span class="flowDot"></span> Step 3: Actions</div>
+            </div>
+          </div>
+        </div>
+        <div class="btnRow">
+          <a class="btn" href="intelligence.html">Back: Insights</a>
+          </div>
+      </header>
+      <section class="content">
+<div class="topBrandSub">AI-powered delivery intelligence for modern Agile teams.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="cardTitle">Next Actions</div>
+          <p class="cardDesc m0">These will be generated from risk signals once you wire real inputs.</p>
+          <div id="suggestionsList" class="mt16" style="display:grid; gap:12px;"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="js/metrics.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/suggestions.js"></script>
+  <script src="js/shell.js"></script>
+</body>
+</html>

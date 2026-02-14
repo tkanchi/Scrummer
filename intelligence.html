@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Scrummer — Sprint Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="intelligence">
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+<div class="brandMark" aria-label="Scrummer">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
+    <path d="M12 12 L19 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="12" cy="12" r="2" fill="currentColor"/>
+  </svg>
+</div>
+        <div>
+          <div class="brandName">SCRUMMER</div>
+          <span class="brandTag">Delivery Intelligence</span>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="index.html" data-page="launchpad"><span class="navIcon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h10M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span> Setup</a>
+        <a href="intelligence.html" data-page="intelligence"><span class="navIcon"><svg viewBox="0 0 24 24" fill="none"><path d="M5 19V10M10 19V5M15 19v-8M20 19v-12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span> Insights</a>
+        <a href="suggestions.html" data-page="suggestions"><span class="navIcon"><svg viewBox="0 0 24 24" fill="none"><path d="M8 12l2.5 2.5L16 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" stroke-width="1.2"/></svg></span> Actions</a>
+        <a href="workspace.html" data-page="workspace"><span class="navIcon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span> AI Ceremony Copilot </a>
+      </nav>
+      <div class="sidebarFooter">
+        <button id="themeToggle" class="btn themeToggle" type="button" aria-label="Toggle theme">
+          <span class="themeLeft">
+            <span class="themeDot" aria-hidden="true"></span>
+            <span class="themeLabel">Theme</span>
+          </span>
+          <span id="themeMode" class="themeMode">—</span>
+        </button>
+      </div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="pageTitle">Sprint Intelligence</div>
+          <div class="pageSub">Signals, risk, and what to do next.</div>
+          <div class="brandStrip">
+            <div class="brandTagline">Know What’s Happening. Know What To Do Next.</div>
+            <div class="brandSub">AI-powered delivery intelligence for modern Agile teams.</div>
+          </div>
+          <div class="flowWrap">
+            <div class="flowSteps" aria-label="Guided flow">
+              <div class="flowStep "><span class="flowDot"></span> Step 1: Setup</div>
+              <div class="flowArrow">→</div>
+              <div class="flowStep is-active"><span class="flowDot"></span> Step 2: Insights</div>
+              <div class="flowArrow">→</div>
+              <div class="flowStep "><span class="flowDot"></span> Step 3: Actions</div>
+            </div>
+          </div>
+        </div>
+        <div class="btnRow">
+          <a class="btn" href="index.html">Back: Setup</a>
+          <a class="btn btnPrimary" href="suggestions.html">Next: Actions</a>
+        </div>
+      </header>
+      <section class="content">
+<div class="topBrandSub">AI-powered delivery intelligence for modern Agile teams.</div>
+          </div>
+        </div>
+        <div id="summaryBanner" class="banner mt12" style="display:none;">
+          <div>
+            <div id="summaryTitle" class="bannerTitle">—</div>
+            <p id="summaryText" class="bannerText m0">—</p>
+          </div>
+          <span id="summaryBadge" class="badge">—</span>
+        </div>
+        <div class="grid4 sectionGap">
+          <div class="card kpi">
+            <div class="cardTitle">Sprint Risk Score</div>
+            <div id="kpiRisk" class="kpiValue">—</div>
+            <div class="kpiMeta">0–100 (Low → High)</div>
+            <div class="bar mt12"><div id="barRisk" class="barFill"></div></div>
+          </div>
+          <div class="card kpi">
+            <div class="cardTitle">Delivery Confidence</div>
+            <div id="kpiConfidence" class="kpiValue">—</div>
+            <div class="kpiMeta">Probability of completing scope</div>
+            <div class="bar mt12"><div id="barConfidence" class="barFill"></div></div>
+          </div>
+          <div class="card kpi">
+            <div class="cardTitle">Focus Factor</div>
+            <div id="kpiFocus" class="kpiValue">—</div>
+            <div class="kpiMeta">Capacity ÷ Velocity</div>
+          </div>
+          <div class="card kpi">
+            <div class="cardTitle">Capacity Health</div>
+            <div id="kpiCapacity" class="kpiValue">—</div>
+            <div class="kpiMeta">Available vs. planned load</div>
+          </div>
+        </div>
+        <div class="formulaRow">
+          <div class="formulaChip">Overcommit: <b id="detailOvercommit">—</b></div>
+          <div class="formulaChip">Capacity shortfall: <b id="detailCapRatio">—</b></div>
+          <div class="formulaChip">Focus: <b id="detailFocusPct">—</b></div>
+          <div class="formulaChip">Risk score: <b id="detailRiskScore">—</b></div>
+        </div>
+        <div class="mt16 grid2">
+          <div class="card">
+            <div class="cardTitle">Velocity Trend</div>
+            <p class="cardDesc m0">Placeholder chart panel. We’ll wire real data next.</p>
+            <div class="mt16" style="height:220px; border-radius:16px; border:1px dashed var(--border-soft); display:grid; place-items:center; color:var(--text-muted);">
+              Chart Area
+            </div>
+          </div>
+          <div class="card">
+            <div class="cardTitle">Risk Signals</div>
+            <p class="cardDesc m0">What’s most likely to slow you down.</p>
+            <div class="mt16" style="display:grid; gap:10px;">
+              <div id="sigScope" class="chip"><span class="chipDot"></span> Scope: —</div>
+              <div id="sigCapacity" class="chip"><span class="chipDot"></span> Capacity: —</div>
+              <div id="sigFlow" class="chip"><span class="chipDot"></span> Flow: —</div>
+              <div id="sigDeps" class="chip"><span class="chipDot"></span> Dependencies: —</div>
+            </div>
+          </div>
+        </div>
+        <div class="mt16 card">
+          <div class="cardTitle">Risk Score (MVP Formula)</div>
+          <p class="cardDesc m0">
+            We’ll compute a 0–100 score from a few simple signals first (fast, reliable), then improve later.
+          </p>
+          <div class="mt12" style="color:var(--text-muted); line-height:1.7;">
+            <b>Inputs:</b> Committed SP, last 3 sprint velocities, sprint days, team members, planned leave/holidays.<br>
+            <b>Signals (shown above):</b><br>
+            - <b>Scope pressure</b> = Committed ÷ Avg velocity<br>
+            - <b>Capacity shortfall</b> = Committed ÷ Effective capacity (availability-adjusted)<br>
+            - <b>Focus</b> = Effective capacity ÷ Avg velocity<br>
+            <b>Risk score (0–100):</b> weighted blend of scope pressure, capacity shortfall, and volatility.<br>
+            <b>Confidence (%):</b> starts from capacity vs commitment and is reduced by volatility.
+          </div>
+        </div>
+        <div class="mt16 card">
+          <div class="cardHeader">
+            <div>
+              <div class="cardTitle">Top Risk Drivers</div>
+              <p class="cardDesc m0">Why the score is what it is — and what to do next.</p>
+            </div>
+          </div>
+          <div id="driversEmpty" class="cardDesc m0" style="color:var(--text-muted); line-height:1.6;">
+            Add setup on Launchpad (commitment + last 3 velocities) to see drivers.
+          </div>
+          <div id="driversList" class="mt16" style="display:grid; gap:10px;"></div>
+        </div>
+        <div class="mt16 card">
+          <div class="cardTitle">Inputs Snapshot</div>
+          <p class="cardDesc m0">So you can validate what Scrummer is using for calculations.</p>
+          <div class="mt12" style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px;">
+            <div class="badge">Avg Velocity: <b id="detailAvgVelocity">—</b></div>
+            <div class="badge">Capacity (SP): <b id="detailCapacitySP">—</b></div>
+            <div class="badge">Committed (SP): <b id="detailCommitted">—</b></div>
+            <div class="badge">Volatility: <b id="detailVol">—</b></div>
+          </div>
+        </div>
+        <div class="mt16 card">
+          <div class="cardHeader">
+            <div>
+              <div class="cardTitle">Sprint History</div>
+              <p class="cardDesc m0">Save snapshots to track improvement and trend over time.</p>
+            </div>
+            <div class="btnRow">
+              <button id="saveSnapshot" class="btn btnPrimary" type="button">Save Snapshot</button>
+              <button id="clearHistory" class="btn btnSubtle" type="button">Clear</button>
+            </div>
+          </div>
+          <div id="historyEmpty" class="cardDesc m0" style="color:var(--text-muted); line-height:1.6;">
+            No snapshots yet. Click <b>Save Snapshot</b> to store this sprint’s signals.
+          </div>
+          <div id="historyList" class="mt16" style="display:grid; gap:10px;"></div>
+        </div>
+      </section>
+    </main
+  </div>
+  <script src="js/metrics.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/intelligence.js"></script>
+  <script src="js/shell.js"></script>
+</body>
+</html>
