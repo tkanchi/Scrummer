@@ -80,17 +80,17 @@
 
     <main class="main">
 
+      <!-- ✅ Tagline STRIP on top (same as Setup/Actions) -->
+      <div class="heroTag">
+        <div class="heroLine">Know What’s Happening. Know What To Do Next.</div>
+        <div class="heroSub">AI-powered delivery intelligence for modern Agile teams.</div>
+      </div>
+
       <header class="topbar">
         <div class="topbarLeft">
           <div class="pageTitle">AI Ceremony Copilot</div>
           <div class="pageSub">Use this during ceremonies (Daily, Planning, Review, Retro). Not part of the 3-step flow.</div>
-
-          <div class="brandStrip">
-            <div class="brandTagline">Know What’s Happening. Know What To Do Next.</div>
-            <div class="brandSub">AI-powered delivery intelligence for modern Agile teams.</div>
-          </div>
         </div>
-
         <div class="btnRow"></div>
       </header>
 
@@ -131,12 +131,23 @@
             </div>
           </div>
 
+          <!-- ✅ Mobile-safe segmented tabs (CSS will make it scroll) -->
           <div class="segTabs" role="tablist" aria-label="Ceremonies">
-            <button class="segBtn" data-tab="planning" type="button">Planning <span class="segBadge" id="badgePlanning" style="display:none;">Recommended</span></button>
-            <button class="segBtn" data-tab="daily" type="button">Daily <span class="segBadge" id="badgeDaily" style="display:none;">Recommended</span></button>
-            <button class="segBtn" data-tab="refine" type="button">Refinement <span class="segBadge" id="badgeRefine" style="display:none;">Recommended</span></button>
-            <button class="segBtn" data-tab="review" type="button">Review <span class="segBadge" id="badgeReview" style="display:none;">Recommended</span></button>
-            <button class="segBtn" data-tab="retro" type="button">Retro <span class="segBadge" id="badgeRetro" style="display:none;">Recommended</span></button>
+            <button class="segBtn" data-tab="planning" type="button">
+              Planning <span class="segBadge" id="badgePlanning" style="display:none;">Recommended</span>
+            </button>
+            <button class="segBtn" data-tab="daily" type="button">
+              Daily <span class="segBadge" id="badgeDaily" style="display:none;">Recommended</span>
+            </button>
+            <button class="segBtn" data-tab="refine" type="button">
+              Refinement <span class="segBadge" id="badgeRefine" style="display:none;">Recommended</span>
+            </button>
+            <button class="segBtn" data-tab="review" type="button">
+              Review <span class="segBadge" id="badgeReview" style="display:none;">Recommended</span>
+            </button>
+            <button class="segBtn" data-tab="retro" type="button">
+              Retro <span class="segBadge" id="badgeRetro" style="display:none;">Recommended</span>
+            </button>
           </div>
         </div>
 
