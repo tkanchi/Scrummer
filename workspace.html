@@ -80,14 +80,9 @@
 
     <main class="main">
 
-      <!-- ✅ Tagline STRIP on top (same as Setup/Actions) -->
-      <div class="heroTag">
-        <div class="heroLine">Know What’s Happening. Know What To Do Next.</div>
-        <div class="heroSub">AI-powered delivery intelligence for modern Agile teams.</div>
-      </div>
-
       <header class="topbar">
         <div class="topbarLeft">
+          <!-- ✅ heroTag will be injected here by shell.js -->
           <div class="pageTitle">AI Ceremony Copilot</div>
           <div class="pageSub">Use this during ceremonies (Daily, Planning, Review, Retro). Not part of the 3-step flow.</div>
         </div>
@@ -131,7 +126,6 @@
             </div>
           </div>
 
-          <!-- ✅ Mobile-safe segmented tabs (CSS will make it scroll) -->
           <div class="segTabs" role="tablist" aria-label="Ceremonies">
             <button class="segBtn" data-tab="planning" type="button">
               Planning <span class="segBadge" id="badgePlanning" style="display:none;">Recommended</span>
