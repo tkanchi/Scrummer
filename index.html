@@ -80,14 +80,13 @@
 
     <main class="main">
 
-      <!-- ✅ Tagline STRIP above Launchpad (Paint reference) -->
-      <div class="heroTag">
-        <div class="heroLine">Know What’s Happening. Know What To Do Next.</div>
-        <div class="heroSub">AI-powered delivery intelligence for modern Agile teams.</div>
-      </div>
-
       <header class="topbar">
         <div class="topbarLeft">
+          <!-- NOTE:
+               The hero tagline is injected here by js/shell.js to stay consistent across all pages.
+               Do NOT hardcode .heroTag in the HTML.
+          -->
+
           <div class="pageTitle">Launchpad</div>
           <div class="pageSub">Step 1: enter sprint basics.</div>
 
@@ -102,7 +101,6 @@
           </div>
         </div>
 
-        <!-- ✅ CTA uses "Next: Insights" -->
         <div class="btnRow">
           <a class="btn btnPrimary primaryCtaFixed" href="intelligence.html" id="nextInsightsBtn">
             <span class="btnIcon" aria-hidden="true">
@@ -132,7 +130,7 @@
 
             <div class="mt16">
               <div class="cardDesc m0">
-                <b>What to do:</b> Fill Sprint Setup → click <b>Save & Continue</b> → get your Insights.
+                <b>What to do:</b> Fill Sprint Setup → click <b>Save &amp; Continue</b> → get your Insights.
               </div>
             </div>
           </div>
@@ -201,7 +199,6 @@
   <script src="js/theme.js"></script>
   <script src="js/shell.js"></script>
 
-  <!-- ✅ Setup gating + CTA state -->
   <script>
     (function(){
       const $ = (id) => document.getElementById(id);
@@ -216,7 +213,6 @@
         try{ return localStorage.getItem("scrummer.setupSaved") === "1"; }catch(e){ return false; }
       }
 
-      // Hook for demo loader
       window.__scrummerUpdateNav = updateNextBtn;
 
       function updateNextBtn(){
@@ -246,7 +242,6 @@
         setTimeout(()=>{ el.style.display="none"; }, 2200);
       }
 
-      // Block nav unless saved
       nextBtn?.addEventListener("click", (e)=>{
         if (!hasSavedSetup()){
           e.preventDefault();
@@ -277,7 +272,6 @@
     })();
   </script>
 
-  <!-- ✅ Demo Data -->
   <script>
     (function(){
       const $ = (id)=>document.getElementById(id);
