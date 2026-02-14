@@ -1,4 +1,3 @@
-
 (function(){
   const $ = (id) => document.getElementById(id);
   const setupApi = window.Scrummer?.setup;
@@ -18,9 +17,12 @@
     try{ localStorage.setItem(COPILOT_KEY, JSON.stringify(obj)); }catch(e){}
   }
 
+  /* =========================================================
+     FIX 1: Tab active class should match CSS: .is-active
+     ========================================================= */
   function setActiveTab(tab){
     document.querySelectorAll(".segBtn").forEach(b=>{
-      b.classList.toggle("active", b.dataset.tab === tab);
+      b.classList.toggle("is-active", b.dataset.tab === tab);
     });
   }
 
@@ -56,11 +58,13 @@
       review: ["badgeReview", "Review"],
       retro: ["badgeRetro", "Retro"]
     };
+
     Object.keys(map).forEach(k=>{
       const el = $(map[k][0]);
       if (!el) return;
       el.style.display = (k === tab) ? "inline-flex" : "none";
     });
+
     const badge = $("copilotRecommended");
     if (badge) badge.textContent = "Recommended: " + (map[tab]?.[1] || "—");
   }
@@ -70,13 +74,66 @@
     return n.toFixed(2) + "×";
   }
 
+  /* =========================================================
+     FIX 2: Green/Yellow/Red coloring for brief KPI values
+     Uses CSS vars: --success --warning --danger
+     ========================================================= */
+  function paint(el, tone){
+    if (!el) return;
+    el.style.color = tone ? `var(--${tone})` : "";
+    el.style.fontWeight = "950";
+  }
+
   function renderBrief(s){
-    $("briefScope").textContent = fmtX(s.overcommitRatio);
+    const scopeEl = $("briefScope");
+    const capEl = $("briefCapRatio");
+    const confEl = $("briefConf");
+    const riskEl = $("briefRisk");
+
+    const over = s.overcommitRatio || 0;
     const capRatio = (s.avgVelocity > 0) ? (s.capacitySP / s.avgVelocity) : 0;
-    $("briefCapRatio").textContent = fmtX(capRatio);
-    $("briefConf").textContent = Math.round(s.confidence) + "%";
-    $("briefRisk").textContent = Math.round(s.riskScore);
-    $("briefRiskMeta").textContent = s.riskBand + " risk";
+    const conf = Number.isFinite(s.confidence) ? Math.round(s.confidence) : NaN;
+    const risk = Number.isFinite(s.riskScore) ? Math.round(s.riskScore) : NaN;
+
+    if (scopeEl) scopeEl.textContent = fmtX(over);
+    if (capEl) capEl.textContent = fmtX(capRatio);
+    if (confEl) confEl.textContent = Number.isFinite(conf) ? (conf + "%") : "—";
+    if (riskEl) riskEl.textContent = Number.isFinite(risk) ? String(risk) : "—";
+
+    const meta = $("briefRiskMeta");
+    if (meta) meta.textContent = (s.riskBand ? (s.riskBand + " risk") : "—");
+
+    // If setup missing, don’t color anything
+    if (!(s.committed > 0) || !(s.avgVelocity > 0)){
+      paint(scopeEl, null);
+      paint(capEl, null);
+      paint(confEl, null);
+      paint(riskEl, null);
+      if (meta) meta.textContent = "Complete Setup first";
+      const badge = $("copilotRecommended");
+      if (badge) badge.textContent = "Recommended: Setup required";
+      return;
+    }
+
+    // Scope pressure: <=1 OK, 1–1.1 warn, >1.1 danger
+    if (over > 1.10) paint(scopeEl, "danger");
+    else if (over > 1.00) paint(scopeEl, "warning");
+    else paint(scopeEl, "success");
+
+    // Capacity ratio vs velocity: <1 danger, 1–1.1 warn, >=1.1 ok
+    if (capRatio < 1.00) paint(capEl, "danger");
+    else if (capRatio < 1.10) paint(capEl, "warning");
+    else paint(capEl, "success");
+
+    // Confidence: >=80 ok, 60–79 warn, <60 danger
+    if (conf >= 80) paint(confEl, "success");
+    else if (conf >= 60) paint(confEl, "warning");
+    else paint(confEl, "danger");
+
+    // Risk: <=30 ok, 31–60 warn, >60 danger
+    if (risk <= 30) paint(riskEl, "success");
+    else if (risk <= 60) paint(riskEl, "warning");
+    else paint(riskEl, "danger");
   }
 
   // Content templates
@@ -101,7 +158,7 @@
           { id:"finalCommit", label:"Final Commitment (SP)", type:"number", placeholder:"e.g., 135" },
           { id:"scopeAdjusted", label:"Scope Adjusted?", type:"select", options:["No","Yes"] },
           { id:"riskAcceptance", label:"Risk Acceptance Level", type:"select", options:["Low","Medium","High"] },
-          { id:"owner", label:"Owner for Follow‑Up", type:"text", placeholder:"Name / role" }
+          { id:"owner", label:"Owner for Follow-Up", type:"text", placeholder:"Name / role" }
         ]
       },
       daily: {
@@ -221,7 +278,7 @@
       let input;
       if (f.type === "select"){
         input = document.createElement("select");
-        input.className = "selectLike";
+        input.className = "selectLike"; // ok even if not styled; will render native
         f.options.forEach(opt=>{
           const o = document.createElement("option");
           o.value = opt;
@@ -274,7 +331,8 @@
 
     renderBrief(s);
 
-    const rec = recommend(s);
+    // If setup missing, still allow tabs + panel, but recommendation is setup-required safe default
+    const rec = (s.committed > 0 && s.avgVelocity > 0) ? recommend(s) : "planning";
     setRecommendationUI(rec);
 
     // tabs
@@ -292,4 +350,11 @@
   }
 
   init();
+
+  // Optional: refresh KPIs if setup changes in another tab
+  window.addEventListener("storage", (e) => {
+    const keySetup = window.Scrummer?.setup?.STORAGE_KEY || "scrummer-setup-v1";
+    if (e.key === keySetup) init();
+  });
+
 })();
