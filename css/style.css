@@ -24,7 +24,6 @@
   --border-soft:#e2e8f0;
   --border-strong: rgba(37,99,235,.28);
 
-  /* aliases used by some blocks */
   --card: var(--bg-secondary);
   --text: var(--text-primary);
 
@@ -372,8 +371,7 @@ html[data-theme="dark"] .nav a.active{
 }
 
 /* -----------------------------
-   Tagline strip (consistent)
-   Put .heroTag INSIDE .topbarLeft on all tabs
+   Tagline strip (injected by shell.js into .topbarLeft)
 ------------------------------ */
 .heroTag{
   margin: 0 0 12px 0;
@@ -541,9 +539,9 @@ html[data-theme="dark"] .btnSubtle{
 
 /* =========================================================
    Intelligence page components
-   ========================================================= */
+========================================================= */
 
-/* Banner */
+/* Banner base */
 .banner{
   display:flex;
   align-items:flex-start;
@@ -566,6 +564,23 @@ html[data-theme="dark"] .btnSubtle{
   line-height: 1.55;
 }
 
+/* Banner variants (used by intelligence.js) */
+.bannerOk{
+  border-color: rgba(22,163,74,.25);
+  background: linear-gradient(180deg, rgba(22,163,74,.10), rgba(255,255,255,0));
+}
+.bannerWarn{
+  border-color: rgba(245,158,11,.25);
+  background: linear-gradient(180deg, rgba(245,158,11,.10), rgba(255,255,255,0));
+}
+.bannerDanger{
+  border-color: rgba(220,38,38,.25);
+  background: linear-gradient(180deg, rgba(220,38,38,.10), rgba(255,255,255,0));
+}
+html[data-theme="dark"] .bannerOk{ background: linear-gradient(180deg, rgba(22,163,74,.16), rgba(15,26,46,0)); }
+html[data-theme="dark"] .bannerWarn{ background: linear-gradient(180deg, rgba(245,158,11,.16), rgba(15,26,46,0)); }
+html[data-theme="dark"] .bannerDanger{ background: linear-gradient(180deg, rgba(220,38,38,.16), rgba(15,26,46,0)); }
+
 /* Badge */
 .badge{
   display:inline-flex;
@@ -578,6 +593,18 @@ html[data-theme="dark"] .btnSubtle{
   font-weight: 900;
   font-size: 12px;
   white-space: nowrap;
+}
+.bannerOk .badge{
+  border-color: rgba(22,163,74,.25);
+  background: rgba(22,163,74,.12);
+}
+.bannerWarn .badge{
+  border-color: rgba(245,158,11,.25);
+  background: rgba(245,158,11,.12);
+}
+.bannerDanger .badge{
+  border-color: rgba(220,38,38,.25);
+  background: rgba(220,38,38,.12);
 }
 
 /* KPI */
@@ -620,7 +647,7 @@ html[data-theme="dark"] .btnSubtle{
   border: 1px solid var(--border-soft);
   background: var(--bg-secondary);
   box-shadow: var(--shadow-sm);
-  font-weight: 800;
+  font-weight: 900;
 }
 .chipDot{
   width:10px; height:10px;
@@ -628,6 +655,27 @@ html[data-theme="dark"] .btnSubtle{
   background: var(--accent);
   flex: 0 0 auto;
 }
+
+/* ✅ Status chip coloring (used by intelligence.js) */
+.chip.ok{
+  border-color: rgba(22,163,74,.28);
+  background: rgba(22,163,74,.10);
+}
+.chip.warn{
+  border-color: rgba(245,158,11,.30);
+  background: rgba(245,158,11,.10);
+}
+.chip.danger{
+  border-color: rgba(220,38,38,.30);
+  background: rgba(220,38,38,.10);
+}
+.chip.ok .chipDot{ background: var(--success); }
+.chip.warn .chipDot{ background: var(--warning); }
+.chip.danger .chipDot{ background: var(--danger); }
+
+html[data-theme="dark"] .chip.ok{ background: rgba(22,163,74,.14); }
+html[data-theme="dark"] .chip.warn{ background: rgba(245,158,11,.14); }
+html[data-theme="dark"] .chip.danger{ background: rgba(220,38,38,.14); }
 
 /* Formula chips row */
 .formulaRow{
@@ -648,7 +696,7 @@ html[data-theme="dark"] .btnSubtle{
 
 /* =========================================================
    Workspace / Copilot components
-   ========================================================= */
+========================================================= */
 
 .cmdTitle{
   display:flex;
@@ -749,125 +797,9 @@ html[data-theme="dark"] .btnSubtle{
 }
 
 /* =========================================================
-   “Notepad look” fix — Drivers + History rows
-   (used by your JS rendering)
-   ========================================================= */
+   Drivers + History rows (JS uses these class names)
+========================================================= */
 
-.driverItem, .historyItem{
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-soft);
-  border-radius: 16px;
-  padding: 14px 14px;
-  box-shadow: var(--shadow-sm);
-}
-.driverHead, .historyHead{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:12px;
-}
-.driverTitle{
-  font-weight: 950;
-  font-size: 14px;
-}
-.driverMeta{
-  margin-top:6px;
-  color: var(--text-muted);
-  font-weight: 650;
-  line-height: 1.55;
-}
-.historyBody{
-  margin-top:10px;
-  color: var(--text-primary);
-  font-weight: 650;
-  line-height: 1.6;
-}
-.historyBody b{ font-weight: 950; }
-
-/* Pills (red / amber / green) */
-.pill{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--border-soft);
-  background: rgba(100,116,139,.08);
-  font-weight: 950;
-  font-size: 12px;
-  white-space: nowrap;
-}
-.pill--red{
-  border-color: rgba(220,38,38,.35);
-  background: rgba(220,38,38,.12);
-  color: #b91c1c;
-}
-.pill--amber{
-  border-color: rgba(245,158,11,.35);
-  background: rgba(245,158,11,.12);
-  color: #b45309;
-}
-.pill--green{
-  border-color: rgba(22,163,74,.35);
-  background: rgba(22,163,74,.12);
-  color: #15803d;
-}
-html[data-theme="dark"] .pill--red{ color:#fecaca; }
-html[data-theme="dark"] .pill--amber{ color:#fde68a; }
-html[data-theme="dark"] .pill--green{ color:#bbf7d0; }
-
-/* =========================================================
-   FIX PACK — status colors + Drivers/History styling
-   Paste at END of style.css
-   ========================================================= */
-
-/* ---------- Banner variants (used in intelligence.js) ---------- */
-.bannerOk{
-  border-color: rgba(22,163,74,.25);
-  background: linear-gradient(180deg, rgba(22,163,74,.10), rgba(255,255,255,0));
-}
-.bannerWarn{
-  border-color: rgba(245,158,11,.25);
-  background: linear-gradient(180deg, rgba(245,158,11,.10), rgba(255,255,255,0));
-}
-.bannerDanger{
-  border-color: rgba(220,38,38,.25);
-  background: linear-gradient(180deg, rgba(220,38,38,.10), rgba(255,255,255,0));
-}
-html[data-theme="dark"] .bannerOk{
-  background: linear-gradient(180deg, rgba(22,163,74,.16), rgba(15,26,46,0));
-}
-html[data-theme="dark"] .bannerWarn{
-  background: linear-gradient(180deg, rgba(245,158,11,.16), rgba(15,26,46,0));
-}
-html[data-theme="dark"] .bannerDanger{
-  background: linear-gradient(180deg, rgba(220,38,38,.16), rgba(15,26,46,0));
-}
-
-/* ---------- Risk chips (used in intelligence.js) ---------- */
-.chip.ok{
-  border-color: rgba(22,163,74,.28);
-  background: rgba(22,163,74,.10);
-}
-.chip.warn{
-  border-color: rgba(245,158,11,.30);
-  background: rgba(245,158,11,.10);
-}
-.chip.danger{
-  border-color: rgba(220,38,38,.30);
-  background: rgba(220,38,38,.10);
-}
-
-.chip.ok .chipDot{ background: var(--success); }
-.chip.warn .chipDot{ background: var(--warning); }
-.chip.danger .chipDot{ background: var(--danger); }
-
-/* dark theme readability */
-html[data-theme="dark"] .chip.ok{ background: rgba(22,163,74,.14); }
-html[data-theme="dark"] .chip.warn{ background: rgba(245,158,11,.14); }
-html[data-theme="dark"] .chip.danger{ background: rgba(220,38,38,.14); }
-
-/* ---------- Drivers list (JS renders .driverItem + left/right) ---------- */
 .driverItem{
   display:flex;
   justify-content:space-between;
@@ -926,7 +858,6 @@ html[data-theme="dark"] .chip.danger{ background: rgba(220,38,38,.14); }
   background: linear-gradient(90deg, var(--accent), var(--accent-strong));
 }
 
-/* ---------- History list (JS renders .historyRow + left/right) ---------- */
 .historyRow{
   display:flex;
   justify-content:space-between;
@@ -976,32 +907,6 @@ html[data-theme="dark"] .chip.danger{ background: rgba(220,38,38,.14); }
 }
 
 /* Delta colors (used by deltaUp/deltaDown/deltaFlat) */
-.deltaUp{
-  color: var(--success);
-  font-weight: 950;
-}
-.deltaDown{
-  color: var(--danger);
-  font-weight: 950;
-}
-.deltaFlat{
-  color: var(--text-muted);
-  font-weight: 900;
-}
-
-/* ---------- Optional: make badges readable on banners ---------- */
-.banner .badge{
-  background: rgba(100,116,139,.10);
-}
-.bannerOk .badge{
-  border-color: rgba(22,163,74,.25);
-  background: rgba(22,163,74,.12);
-}
-.bannerWarn .badge{
-  border-color: rgba(245,158,11,.25);
-  background: rgba(245,158,11,.12);
-}
-.bannerDanger .badge{
-  border-color: rgba(220,38,38,.25);
-  background: rgba(220,38,38,.12);
-}
+.deltaUp{ color: var(--success); font-weight: 950; }
+.deltaDown{ color: var(--danger); font-weight: 950; }
+.deltaFlat{ color: var(--text-muted); font-weight: 900; }
