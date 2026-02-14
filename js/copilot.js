@@ -1,3 +1,10 @@
+/* =========================================================
+   Scrummer — copilot.js (FULL / FIXED)
+   - Uses Scrummer signals from metrics.js
+   - Renders ceremony guidance + decision capture
+   - Fix: active tab uses .is-active (matches your CSS)
+   ========================================================= */
+
 (function(){
   const $ = (id) => document.getElementById(id);
   const setupApi = window.Scrummer?.setup;
@@ -17,9 +24,7 @@
     try{ localStorage.setItem(COPILOT_KEY, JSON.stringify(obj)); }catch(e){}
   }
 
-  /* =========================================================
-     FIX 1: Tab active class should match CSS: .is-active
-     ========================================================= */
+  // ✅ FIX: CSS expects .segBtn.is-active (not .active)
   function setActiveTab(tab){
     document.querySelectorAll(".segBtn").forEach(b=>{
       b.classList.toggle("is-active", b.dataset.tab === tab);
@@ -74,66 +79,21 @@
     return n.toFixed(2) + "×";
   }
 
-  /* =========================================================
-     FIX 2: Green/Yellow/Red coloring for brief KPI values
-     Uses CSS vars: --success --warning --danger
-     ========================================================= */
-  function paint(el, tone){
-    if (!el) return;
-    el.style.color = tone ? `var(--${tone})` : "";
-    el.style.fontWeight = "950";
-  }
-
   function renderBrief(s){
     const scopeEl = $("briefScope");
     const capEl = $("briefCapRatio");
     const confEl = $("briefConf");
     const riskEl = $("briefRisk");
+    const riskMetaEl = $("briefRiskMeta");
 
-    const over = s.overcommitRatio || 0;
+    if (scopeEl) scopeEl.textContent = fmtX(s.overcommitRatio);
+
     const capRatio = (s.avgVelocity > 0) ? (s.capacitySP / s.avgVelocity) : 0;
-    const conf = Number.isFinite(s.confidence) ? Math.round(s.confidence) : NaN;
-    const risk = Number.isFinite(s.riskScore) ? Math.round(s.riskScore) : NaN;
-
-    if (scopeEl) scopeEl.textContent = fmtX(over);
     if (capEl) capEl.textContent = fmtX(capRatio);
-    if (confEl) confEl.textContent = Number.isFinite(conf) ? (conf + "%") : "—";
-    if (riskEl) riskEl.textContent = Number.isFinite(risk) ? String(risk) : "—";
 
-    const meta = $("briefRiskMeta");
-    if (meta) meta.textContent = (s.riskBand ? (s.riskBand + " risk") : "—");
-
-    // If setup missing, don’t color anything
-    if (!(s.committed > 0) || !(s.avgVelocity > 0)){
-      paint(scopeEl, null);
-      paint(capEl, null);
-      paint(confEl, null);
-      paint(riskEl, null);
-      if (meta) meta.textContent = "Complete Setup first";
-      const badge = $("copilotRecommended");
-      if (badge) badge.textContent = "Recommended: Setup required";
-      return;
-    }
-
-    // Scope pressure: <=1 OK, 1–1.1 warn, >1.1 danger
-    if (over > 1.10) paint(scopeEl, "danger");
-    else if (over > 1.00) paint(scopeEl, "warning");
-    else paint(scopeEl, "success");
-
-    // Capacity ratio vs velocity: <1 danger, 1–1.1 warn, >=1.1 ok
-    if (capRatio < 1.00) paint(capEl, "danger");
-    else if (capRatio < 1.10) paint(capEl, "warning");
-    else paint(capEl, "success");
-
-    // Confidence: >=80 ok, 60–79 warn, <60 danger
-    if (conf >= 80) paint(confEl, "success");
-    else if (conf >= 60) paint(confEl, "warning");
-    else paint(confEl, "danger");
-
-    // Risk: <=30 ok, 31–60 warn, >60 danger
-    if (risk <= 30) paint(riskEl, "success");
-    else if (risk <= 60) paint(riskEl, "warning");
-    else paint(riskEl, "danger");
+    if (confEl) confEl.textContent = Math.round(s.confidence) + "%";
+    if (riskEl) riskEl.textContent = String(Math.round(s.riskScore));
+    if (riskMetaEl) riskMetaEl.textContent = (s.riskBand || "—") + " risk";
   }
 
   // Content templates
@@ -161,6 +121,7 @@
           { id:"owner", label:"Owner for Follow-Up", type:"text", placeholder:"Name / role" }
         ]
       },
+
       daily: {
         title: "Daily Scrum",
         why: "Protect flow and unblock work fast. Daily is a risk-control loop, not a status meeting.",
@@ -175,6 +136,7 @@
           { id:"wipMove", label:"WIP Decision", type:"select", options:["No change","Reduce WIP","Swarm on critical","Pause new work"] }
         ]
       },
+
       refine: {
         title: "Backlog Refinement",
         why: "Reduce future delivery surprises by improving story readiness before planning.",
@@ -188,6 +150,7 @@
           { id:"riskNotes", label:"Top risk clarified", type:"text", placeholder:"Dependency / unknown resolved" }
         ]
       },
+
       review: {
         title: "Sprint Review",
         why: "Make progress visible and validate value. Use feedback to steer the next sprint.",
@@ -201,6 +164,7 @@
           { id:"feedbackOwner", label:"Owner for feedback items", type:"text", placeholder:"Name / role" }
         ]
       },
+
       retro: {
         title: "Retrospective",
         why: "Improve the system. Pick one experiment that reduces risk next sprint.",
@@ -227,23 +191,26 @@
         ? "Signals suggest commitment pressure. Use planning to re-balance scope and capacity."
         : base.planning.why;
     }
+
     if (tab === "daily"){
       if (focus < 0.90){
         base.daily.list.unshift("Focus is low: too much parallel work is likely. Consider swarming and reducing WIP.");
       }
-      base.daily.list = base.daily.list.slice(0,5);
+      base.daily.list = base.daily.list.slice(0, 5);
     }
+
     if (tab === "retro"){
       if (vol > 0.18){
         base.retro.list.unshift("Predictability variance detected: dig into what changed sprint-to-sprint.");
       }
-      base.retro.list = base.retro.list.slice(0,5);
+      base.retro.list = base.retro.list.slice(0, 5);
     }
+
     if (tab === "review"){
       if (conf < 70){
         base.review.list.unshift("Confidence is low: use review to confirm expectations and reset scope/priorities early.");
       }
-      base.review.list = base.review.list.slice(0,5);
+      base.review.list = base.review.list.slice(0, 5);
     }
 
     return base[tab];
@@ -251,18 +218,24 @@
 
   function renderPanel(tab, s){
     const c = contentFor(tab, s);
-    $("panelTitle").textContent = c.title;
-    $("panelWhy").textContent = c.why;
+
+    const titleEl = $("panelTitle");
+    const whyEl = $("panelWhy");
+    if (titleEl) titleEl.textContent = c.title;
+    if (whyEl) whyEl.textContent = c.why;
 
     const ul = $("panelList");
-    ul.innerHTML = "";
-    c.list.forEach(t=>{
-      const li = document.createElement("li");
-      li.textContent = t;
-      ul.appendChild(li);
-    });
+    if (ul){
+      ul.innerHTML = "";
+      c.list.forEach(t=>{
+        const li = document.createElement("li");
+        li.textContent = t;
+        ul.appendChild(li);
+      });
+    }
 
     const grid = $("decisionFields");
+    if (!grid) return;
     grid.innerHTML = "";
 
     const store = loadCopilot();
@@ -270,16 +243,18 @@
 
     c.fields.forEach(f=>{
       const wrap = document.createElement("label");
+
       const d = document.createElement("div");
       d.className = "cardDesc m0";
       d.textContent = f.label;
       wrap.appendChild(d);
 
       let input;
+
       if (f.type === "select"){
         input = document.createElement("select");
-        input.className = "selectLike"; // ok even if not styled; will render native
-        f.options.forEach(opt=>{
+        input.className = "selectLike"; // styled in CSS
+        (f.options || []).forEach(opt=>{
           const o = document.createElement("option");
           o.value = opt;
           o.textContent = opt;
@@ -288,39 +263,50 @@
       } else {
         input = document.createElement("input");
         input.className = "btn";
-        input.type = f.type;
+        input.type = f.type || "text";
         input.placeholder = f.placeholder || "";
         input.style.width = "100%";
       }
 
       input.id = "cp_" + f.id;
+
       const v = saved[f.id];
       if (v !== undefined && v !== null) input.value = v;
+
       wrap.appendChild(input);
       grid.appendChild(wrap);
     });
 
-    // Wire Save/Clear for this tab
-    $("copilotSave").onclick = () => {
-      const store = loadCopilot();
-      const obj = {};
-      c.fields.forEach(f=>{
-        const el = $("cp_" + f.id);
-        obj[f.id] = el ? el.value : "";
-      });
-      obj.savedAt = new Date().toISOString();
-      store[tab] = obj;
-      saveCopilot(store);
-      showMsg("Saved.");
-    };
+    // Wire Save/Clear for this tab (overwrite handlers safely)
+    const saveBtn = $("copilotSave");
+    const clearBtn = $("copilotClear");
 
-    $("copilotClear").onclick = () => {
-      const store = loadCopilot();
-      delete store[tab];
-      saveCopilot(store);
-      renderPanel(tab, s);
-      showMsg("Cleared.");
-    };
+    if (saveBtn){
+      saveBtn.onclick = () => {
+        const store = loadCopilot();
+        const obj = {};
+
+        c.fields.forEach(f=>{
+          const el = $("cp_" + f.id);
+          obj[f.id] = el ? el.value : "";
+        });
+
+        obj.savedAt = new Date().toISOString();
+        store[tab] = obj;
+        saveCopilot(store);
+        showMsg("Saved.");
+      };
+    }
+
+    if (clearBtn){
+      clearBtn.onclick = () => {
+        const store = loadCopilot();
+        delete store[tab];
+        saveCopilot(store);
+        renderPanel(tab, s);
+        showMsg("Cleared.");
+      };
+    }
   }
 
   function init(){
@@ -331,30 +317,23 @@
 
     renderBrief(s);
 
-    // If setup missing, still allow tabs + panel, but recommendation is setup-required safe default
-    const rec = (s.committed > 0 && s.avgVelocity > 0) ? recommend(s) : "planning";
+    const rec = recommend(s);
     setRecommendationUI(rec);
 
-    // tabs
+    // Tabs
     document.querySelectorAll(".segBtn").forEach(btn=>{
       btn.addEventListener("click", ()=>{
         const tab = btn.dataset.tab;
+        if (!tab) return;
         setActiveTab(tab);
         renderPanel(tab, s);
       });
     });
 
-    // initial
+    // Initial
     setActiveTab(rec);
     renderPanel(rec, s);
   }
 
   init();
-
-  // Optional: refresh KPIs if setup changes in another tab
-  window.addEventListener("storage", (e) => {
-    const keySetup = window.Scrummer?.setup?.STORAGE_KEY || "scrummer-setup-v1";
-    if (e.key === keySetup) init();
-  });
-
 })();
