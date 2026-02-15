@@ -83,11 +83,12 @@
       <header class="topbar">
         <div class="topbarLeft">
 
-          <!-- ✅ Premium brand header (NO ICON, NO FLOATING BOX) -->
-          <div class="brandHeader">
-            <div class="brandBlock">
-              <div class="brandTagline">Know what’s happening. Know what to do next.AI-powered delivery intelligence for modern Agile teams</div>
-              </div>
+          <!-- ✅ FIXED: Tagline now inside a proper strip container (no rounded corners) -->
+          <div class="headerBrand">
+            <div class="hbText">
+              <div class="hbLine">Know what's happening. Know what to do next.</div>
+              <div class="hbSub">AI-powered delivery intelligence for modern Agile teams</div>
+            </div>
           </div>
 
           <div class="pageTitle">Launchpad</div>
@@ -155,31 +156,31 @@
             <div class="mt12" style="display:grid; gap:10px;">
               <label>
                 <div class="cardDesc m0">Sprint Days</div>
-                <input id="sprintDays" type="number" placeholder="10">
+                <input id="sprintDays" class="btn" style="width:100%;" type="number" placeholder="10">
               </label>
 
               <label>
                 <div class="cardDesc m0">Team Members</div>
-                <input id="teamMembers" type="number" placeholder="7">
+                <input id="teamMembers" class="btn" style="width:100%;" type="number" placeholder="7">
               </label>
 
               <label>
                 <div class="cardDesc m0">Planned Leave + Holidays (total person-days)</div>
-                <input id="leaveDays" type="number" placeholder="3">
+                <input id="leaveDays" class="btn" style="width:100%;" type="number" placeholder="3">
               </label>
 
               <label>
                 <div class="cardDesc m0">Committed Story Points</div>
-                <input id="committedSP" type="number" placeholder="40">
+                <input id="committedSP" class="btn" style="width:100%;" type="number" placeholder="40">
               </label>
 
               <div class="card" style="padding:14px;">
                 <div class="cardTitle" style="font-size:14px;">Last 3 Sprint Velocities (completed SP)</div>
                 <p class="cardDesc m0">Used to compute average velocity + volatility.</p>
                 <div class="mt12" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px;">
-                  <input id="v1" type="number" placeholder="Sprint 1">
-                  <input id="v2" type="number" placeholder="Sprint 2">
-                  <input id="v3" type="number" placeholder="Sprint 3">
+                  <input id="v1" class="btn" type="number" placeholder="Sprint 1">
+                  <input id="v2" class="btn" type="number" placeholder="Sprint 2">
+                  <input id="v3" class="btn" type="number" placeholder="Sprint 3">
                 </div>
               </div>
 
