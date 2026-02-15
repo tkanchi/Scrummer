@@ -6,6 +6,7 @@
    - Signals engine + snapshots API
    ========================================================= */
 
+/* ===================OLD Code===========
 (() => {
   // ----------------------------
   // 1) Active sidebar link
@@ -204,4 +205,43 @@
   window.Scrummer.setup = { loadSetup, saveSetup, STORAGE_KEY };
   window.Scrummer.snapshots = { loadSnapshots, saveSnapshots, addSnapshot, makeSnapshot, SNAP_KEY };
   window.Scrummer.computeSignals = computeSignals;
+})(); 
+=================end of old code======================*/
+
+(() => {
+  const $id = (id) => document.getElementById(id);
+  const compute = window.Scrummer?.computeSignals;
+  const setupAPI = window.Scrummer?.setup;
+
+  function setBar(el, pct){
+    if (!el) return;
+    const safePct = Math.max(0, Math.min(100, pct || 0));
+    el.style.width = safePct + "%";
+    el.className = "barFill";
+
+    // for confidence/risk: higher = "worse" only for risk
+    // but we keep same thresholds as requested
+    if (safePct > 60) el.classList.add("danger");
+    else if (safePct > 30) el.classList.add("warn");
+    else el.classList.add("ok");
+  }
+
+  function render(){
+    if (!setupAPI || !compute) return;
+    const setup = setupAPI.loadSetup();
+    const s = compute(setup);
+
+    // workspace ids (if present)
+    const cDisp = $id("wsConfidence");
+    if (cDisp) cDisp.textContent = Math.round(s.confidence || 0) + "%";
+
+    const rDisp = $id("wsRisk");
+    if (rDisp) rDisp.textContent = Math.round(s.riskScore || 0);
+
+    setBar($id("wsConfidenceBar"), s.confidence);
+    setBar($id("wsRiskBar"), s.riskScore);
+  }
+
+  render();
 })();
+
