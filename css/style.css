@@ -1,6 +1,6 @@
 /* =========================================================
    SCRUMMER — Premium Balanced Hybrid (Light-first)
-   Fixes: header tagline placement + premium depth
+   Fixes: tagline placement + premium strip (no rounded corners)
    Keeps: KPI mini boxes + signal colors + bars + action cards
    Drop-in replacement for css/style.css
    ========================================================= */
@@ -263,7 +263,7 @@ html[data-theme="dark"] select:focus{
 .nav a:hover{
   background: rgba(37,99,235,.06);
   border-color: rgba(37,99,235,.14);
-  transform: translateX(4px); /* premium native feel */
+  transform: translateX(4px);
 }
 html[data-theme="dark"] .nav a:hover{
   background: rgba(96,165,250,.10);
@@ -373,51 +373,79 @@ html[data-theme="dark"] .nav a.active{
 }
 
 /* -----------------------------
-   IMPORTANT: old heroTag hidden
-   (We moved tagline into headerBrand)
+   IMPORTANT: old heroTag hidden (if present anywhere)
 ------------------------------ */
 .heroTag{ display:none !important; }
 
-/* -----------------------------
-   Premium topbar brand strip
------------------------------- */
-.headerBrand{
+/* =========================================================
+   ✅ TAGLINE STRIP (THE FIX)
+   If your HTML has:
+   <div class="headerBrand"> ... </div>
+   This will render as a clean rectangular cell strip.
+   - No rounded corners
+   - No floating look
+   - No icon in top header (only sidebar keeps icon)
+========================================================= */
+
+.topbarLeft .headerBrand{
+  width: 100%;
   display:flex;
   align-items:center;
   gap:12px;
+
+  /* RECTANGULAR CELL */
+  padding: 10px 12px;
   margin: 0 0 10px 0;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-secondary);
+  border-radius: 0;              /* ✅ no rounded corners */
+  box-shadow: none;              /* ✅ not a floating card */
 }
 
-.hbMark{
-  width:30px;
-  height:30px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-  color:#fff;
-  display:grid;
-  place-items:center;
-  font-weight: 950;
-  font-size:16px;
-  box-shadow: 0 10px 22px rgba(37,99,235,.18);
-  flex: 0 0 auto;
+html[data-theme="dark"] .topbarLeft .headerBrand{
+  background: rgba(15,26,46,.55);
 }
 
-.hbLine{
-  font-weight: 950;
-  font-size: 14px;
-  letter-spacing: -0.35px;
-  line-height: 1.1;
+/* Hide the icon ONLY in the topbar tagline area (not sidebar) */
+.topbarLeft .headerBrand .hbMark{
+  display:none !important;
 }
-.hbSub{
+
+/* Make sure text block always shows */
+.topbarLeft .headerBrand .hbText{
+  min-width:0;
+  display:block;
+}
+
+/* Premium sizing + spacing */
+.topbarLeft .headerBrand .hbLine{
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: -0.15px;
+  line-height: 1.2;
+  text-transform: none;          /* ✅ remove harsh uppercase vibe */
+  white-space: normal;           /* ✅ allow wrap if needed */
+  overflow: visible;
+  text-overflow: unset;
+}
+
+.topbarLeft .headerBrand .hbSub{
+  display:block !important;      /* ✅ subtext will NOT disappear */
   margin-top: 2px;
   color: var(--text-muted);
-  font-weight: 650;
-  font-size: 11px;
-  line-height: 1.2;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.25;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
 }
 
+/* Mobile: keep subtext visible too (unless you really want to hide it) */
 @media (max-width: 520px){
-  .hbSub{ display:none; }
+  .topbarLeft .headerBrand{ padding: 10px 10px; }
+  .topbarLeft .headerBrand .hbLine{ font-size: 12.5px; }
+  .topbarLeft .headerBrand .hbSub{ font-size: 11.5px; }
 }
 
 /* -----------------------------
@@ -973,68 +1001,4 @@ html[data-theme="dark"] .bannerDanger{ background: linear-gradient(180deg, rgba(
 html[data-theme="dark"] .selectLike:focus{
   border-color: rgba(96,165,250,.55);
   box-shadow: 0 0 0 4px rgba(96,165,250,.14);
-}
-
-/* =========================================================
-   Header Brand Strip (Tagline fix)
-   - Makes tagline look premium, not like a random floating box
-   - Safe add-on: does NOT touch KPI cards, signals, etc.
-========================================================= */
-
-.headerBrand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding: 0;
-  margin: 0 0 10px 0;
-}
-
-.hbLeft{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  min-width:0;
-}
-
-.hbMark{
-  width:28px;
-  height:28px;
-  border-radius:10px;
-  display:grid;
-  place-items:center;
-  background: var(--accent);
-  color:#fff;
-  font-weight: 950;
-  font-size: 14px;
-  flex: 0 0 auto;
-  box-shadow: var(--shadow-sm);
-}
-
-.hbText{ min-width:0; }
-
-.hbLine{
-  font-weight: 950;
-  font-size: 12.5px;
-  line-height: 1.15;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  white-space: nowrap;
-  overflow:hidden;
-  text-overflow: ellipsis;
-}
-
-.hbSub{
-  margin-top: 2px;
-  color: var(--text-muted);
-  font-weight: 650;
-  font-size: 11px;
-  line-height: 1.2;
-  white-space: nowrap;
-  overflow:hidden;
-  text-overflow: ellipsis;
-}
-
-/* Mobile: keep header clean */
-@media (max-width: 520px){
-  .hbSub{ display:none; }
 }
