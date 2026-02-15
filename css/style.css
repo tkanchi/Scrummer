@@ -974,3 +974,67 @@ html[data-theme="dark"] .selectLike:focus{
   border-color: rgba(96,165,250,.55);
   box-shadow: 0 0 0 4px rgba(96,165,250,.14);
 }
+
+/* =========================================================
+   Header Brand Strip (Tagline fix)
+   - Makes tagline look premium, not like a random floating box
+   - Safe add-on: does NOT touch KPI cards, signals, etc.
+========================================================= */
+
+.headerBrand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding: 0;
+  margin: 0 0 10px 0;
+}
+
+.hbLeft{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+}
+
+.hbMark{
+  width:28px;
+  height:28px;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  background: var(--accent);
+  color:#fff;
+  font-weight: 950;
+  font-size: 14px;
+  flex: 0 0 auto;
+  box-shadow: var(--shadow-sm);
+}
+
+.hbText{ min-width:0; }
+
+.hbLine{
+  font-weight: 950;
+  font-size: 12.5px;
+  line-height: 1.15;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow:hidden;
+  text-overflow: ellipsis;
+}
+
+.hbSub{
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-weight: 650;
+  font-size: 11px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow:hidden;
+  text-overflow: ellipsis;
+}
+
+/* Mobile: keep header clean */
+@media (max-width: 520px){
+  .hbSub{ display:none; }
+}
