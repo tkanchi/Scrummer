@@ -134,13 +134,13 @@
           <div class="card kpi">
             <div class="cardTitle">Focus Factor</div>
             <div id="kpiFocus" class="kpiValue">—</div>
-            <div class="kpiMeta">Capacity ÷ Velocity</div>
+            <div class="kpiMeta">Capacity ÷ Average Velocity</div>
           </div>
 
           <div class="card kpi">
             <div class="cardTitle">Capacity Health</div>
             <div id="kpiCapacity" class="kpiValue">—</div>
-            <div class="kpiMeta">Available vs. planned load</div>
+            <div class="kpiMeta">Available Capacity vs. Planned Load</div>
           </div>
         </div>
 
@@ -178,13 +178,13 @@
             We’ll compute a 0–100 score from a few simple signals first (fast, reliable), then improve later.
           </p>
           <div class="mt12" style="color:var(--text-muted); line-height:1.7;">
-            <b>Inputs:</b> Committed SP, last 3 sprint velocities, sprint days, team members, planned leave/holidays.<br>
-            <b>Signals (shown above):</b><br>
-            - <b>Scope pressure</b> = Committed ÷ Avg velocity<br>
-            - <b>Capacity shortfall</b> = Committed ÷ Effective capacity (availability-adjusted)<br>
-            - <b>Focus</b> = Effective capacity ÷ Avg velocity<br>
-            <b>Risk score (0–100):</b> weighted blend of scope pressure, capacity shortfall, and volatility.<br>
-            <b>Confidence (%):</b> starts from capacity vs commitment and is reduced by volatility.
+            <b>Inputs:</b> Committed Story Points, Last 3 Sprints Velocities, Sprint Days, Team Members, Planned Leaves/Holidays.<br>
+            <b>Signals (Shown Above):</b><br>
+            - <b>Scope Pressure</b> = Committed Story Points÷ Average Velocity<br>
+            - <b>Capacity Shortfall</b> = Committed Story Points÷ Effective capacity (availability-adjusted)<br>
+            - <b>Focus</b> = Effective Capacity ÷ Average Velocity<br>
+            <b>Risk score (0–100):</b> Weighted blend of scope pressure, capacity shortfall, and volatility.<br>
+            <b>Confidence (%):</b> Atarts from capacity vs commitment and is reduced by volatility.
           </div>
         </div>
 
@@ -206,8 +206,8 @@
           <p class="cardDesc m0">So you can validate what Scrummer is using for calculations.</p>
           <div class="mt12" style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px;">
             <div class="badge">Avg Velocity: <b id="detailAvgVelocity">—</b></div>
-            <div class="badge">Capacity (SP): <b id="detailCapacitySP">—</b></div>
-            <div class="badge">Committed (SP): <b id="detailCommitted">—</b></div>
+            <div class="badge">Capacity (Story Points): <b id="detailCapacitySP">—</b></div>
+            <div class="badge">Committed (Story Points): <b id="detailCommitted">—</b></div>
             <div class="badge">Volatility: <b id="detailVol">—</b></div>
           </div>
         </div>
