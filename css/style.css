@@ -1,7 +1,8 @@
 /* =========================================================
-   SCRUMMER — Premium Futuristic (Light-first) + Guided Flow
-   Drop-in replacement for css/style.css  (FINAL / CLEAN)
-   + Workspace fixes (header strip + safe selects)
+   SCRUMMER — Premium Balanced Hybrid (Light-first)
+   Fixes: header tagline placement + premium depth
+   Keeps: KPI mini boxes + signal colors + bars + action cards
+   Drop-in replacement for css/style.css
    ========================================================= */
 
 /* -----------------------------
@@ -14,6 +15,7 @@
 
   --text-primary:#0f172a;
   --text-muted:#64748b;
+  --text-light:#94a3b8;
 
   --accent:#2563eb;
   --accent-strong:#1d4ed8;
@@ -22,15 +24,12 @@
   --warning:#d97706;
   --danger:#dc2626;
 
-  --border-soft:#e2e8f0;
+  --border-soft: rgba(15,23,42,.08);
   --border-strong: rgba(37,99,235,.28);
 
-  --card: var(--bg-secondary);
-  --text: var(--text-primary);
-
-  --shadow-sm: 0 2px 10px rgba(15,23,42,.04);
-  --shadow-md: 0 8px 22px rgba(15,23,42,.06);
-  --shadow-lg: 0 18px 44px rgba(15,23,42,.08);
+  --shadow-sm: 0 4px 18px rgba(15,23,42,.06);
+  --shadow-md: 0 10px 28px rgba(15,23,42,.08);
+  --shadow-lg: 0 18px 44px rgba(15,23,42,.10);
 
   --radius-lg:16px;
   --radius-md:12px;
@@ -40,7 +39,7 @@
   --content-max: 1200px;
 
   --trans-fast: .14s ease;
-  --trans-med: .22s ease;
+  --trans-med: .22s cubic-bezier(.4,0,.2,1);
 
   --glass: rgba(255,255,255,.75);
   --glass-2: rgba(255,255,255,.55);
@@ -59,6 +58,7 @@ html[data-theme="dark"]{
 
   --text-primary:#e8eefc;
   --text-muted:#98a2b3;
+  --text-light:#64748b;
 
   --accent:#60a5fa;
   --accent-strong:#3b82f6;
@@ -66,11 +66,8 @@ html[data-theme="dark"]{
   --border-soft: rgba(255,255,255,.10);
   --border-strong: rgba(96,165,250,.28);
 
-  --card: var(--bg-secondary);
-  --text: var(--text-primary);
-
-  --shadow-sm: 0 2px 14px rgba(0,0,0,.25);
-  --shadow-md: 0 12px 34px rgba(0,0,0,.35);
+  --shadow-sm: 0 10px 28px rgba(0,0,0,.28);
+  --shadow-md: 0 18px 44px rgba(0,0,0,.35);
   --shadow-lg: 0 22px 60px rgba(0,0,0,.45);
 
   --glass: rgba(15,26,46,.66);
@@ -180,6 +177,12 @@ html[data-theme="dark"] select:focus{
   max-width: var(--content-max);
   padding:22px;
   margin: 0 auto;
+  animation: fadeInUp .42s cubic-bezier(.16,1,.3,1);
+}
+
+@keyframes fadeInUp{
+  from{ opacity:0; transform: translateY(10px); }
+  to{ opacity:1; transform: translateY(0); }
 }
 
 /* Responsive */
@@ -195,7 +198,7 @@ html[data-theme="dark"] select:focus{
 }
 
 /* -----------------------------
-   Brand (Sidebar)
+   Sidebar brand (left)
 ------------------------------ */
 .brand{
   display:flex;
@@ -232,7 +235,7 @@ html[data-theme="dark"] select:focus{
 }
 
 /* -----------------------------
-   Nav
+   Nav (sidebar)
 ------------------------------ */
 .nav{
   display:flex;
@@ -258,9 +261,9 @@ html[data-theme="dark"] select:focus{
 }
 
 .nav a:hover{
-  background: rgba(37,99,235,.08);
-  border-color: rgba(37,99,235,.18);
-  transform: translateY(-1px);
+  background: rgba(37,99,235,.06);
+  border-color: rgba(37,99,235,.14);
+  transform: translateX(4px); /* premium native feel */
 }
 html[data-theme="dark"] .nav a:hover{
   background: rgba(96,165,250,.10);
@@ -268,23 +271,24 @@ html[data-theme="dark"] .nav a:hover{
 }
 
 .nav a.active{
-  background: rgba(37,99,235,.14);
-  border-color: rgba(37,99,235,.28);
+  background: rgba(37,99,235,.06);
+  border-color: transparent;
+  color: var(--accent);
+  padding-left: 12px;
 }
-html[data-theme="dark"] .nav a.active{
-  background: rgba(96,165,250,.14);
-  border-color: rgba(96,165,250,.28);
-}
-
 .nav a.active::before{
   content:"";
   position:absolute;
-  left:-14px;
+  left:-8px;
   top:8px;
   bottom:8px;
   width:3px;
   background: var(--accent);
-  border-radius: 4px;
+  border-radius: 6px;
+}
+html[data-theme="dark"] .nav a.active{
+  background: rgba(96,165,250,.10);
+  color: var(--accent);
 }
 
 .nav a.isDisabled{ opacity:.55; pointer-events:none; }
@@ -340,7 +344,7 @@ html[data-theme="dark"] .nav a.active{
 .pageTitle{
   font-size: 20px;
   font-weight:800;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.4px;
 }
 .pageSub{
   margin-top:4px;
@@ -369,15 +373,63 @@ html[data-theme="dark"] .nav a.active{
 }
 
 /* -----------------------------
-   Cards
+   IMPORTANT: old heroTag hidden
+   (We moved tagline into headerBrand)
+------------------------------ */
+.heroTag{ display:none !important; }
+
+/* -----------------------------
+   Premium topbar brand strip
+------------------------------ */
+.headerBrand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin: 0 0 10px 0;
+}
+
+.hbMark{
+  width:30px;
+  height:30px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color:#fff;
+  display:grid;
+  place-items:center;
+  font-weight: 950;
+  font-size:16px;
+  box-shadow: 0 10px 22px rgba(37,99,235,.18);
+  flex: 0 0 auto;
+}
+
+.hbLine{
+  font-weight: 950;
+  font-size: 14px;
+  letter-spacing: -0.35px;
+  line-height: 1.1;
+}
+.hbSub{
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-weight: 650;
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+@media (max-width: 520px){
+  .hbSub{ display:none; }
+}
+
+/* -----------------------------
+   Cards (premium depth)
 ------------------------------ */
 .card{
   background: var(--bg-secondary);
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius-lg);
-  padding: 18px;
+  border: 1px solid rgba(15,23,42,.06);
+  border-radius: 14px;
+  padding: 20px;
   box-shadow: var(--shadow-sm);
-  transition: transform var(--trans-med), box-shadow var(--trans-med), border-color var(--trans-med);
+  transition: transform var(--trans-med), box-shadow var(--trans-med);
 }
 .card:hover{
   transform: translateY(-2px);
@@ -400,10 +452,10 @@ html[data-theme="dark"] .nav a.active{
   justify-content:center;
   gap:10px;
 
-  padding:10px 12px;
+  padding:10px 14px;
   border-radius: var(--radius-md);
 
-  border: 1px solid var(--border-soft);
+  border: 1px solid rgba(15,23,42,.10);
   background: var(--bg-secondary);
   color: var(--text-primary);
 
@@ -416,7 +468,7 @@ html[data-theme="dark"] .nav a.active{
 .btn:hover{
   transform: translateY(-1px);
   background: var(--bg-elevated);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 6px 18px rgba(15,23,42,.08);
 }
 .btn:active{ transform: translateY(0); }
 
@@ -424,19 +476,19 @@ html[data-theme="dark"] .nav a.active{
   border:none;
   background: linear-gradient(135deg, var(--accent), var(--accent-strong));
   color:#fff;
-  box-shadow: 0 8px 18px rgba(37,99,235,.18);
+  box-shadow: 0 10px 22px rgba(37,99,235,.18);
 }
 html[data-theme="dark"] .btnPrimary{
   box-shadow: 0 10px 22px rgba(0,0,0,.25);
 }
 .btnPrimary:hover{
   background: linear-gradient(135deg, var(--accent-strong), var(--accent));
-  box-shadow: 0 12px 22px rgba(37,99,235,.24);
+  box-shadow: 0 14px 26px rgba(37,99,235,.24);
 }
 
 .btnSubtle{
   background: rgba(100,116,139,.10);
-  border-color: rgba(100,116,139,.22);
+  border-color: rgba(100,116,139,.20);
   color: var(--text-primary);
 }
 html[data-theme="dark"] .btnSubtle{
@@ -513,6 +565,8 @@ html[data-theme="dark"] .btnSubtle{
 /* =========================================================
    Intelligence page components
 ========================================================= */
+
+/* Banner base */
 .banner{
   display:flex;
   align-items:flex-start;
@@ -532,7 +586,7 @@ html[data-theme="dark"] .btnSubtle{
   line-height: 1.55;
 }
 
-/* Banner variants (used by intelligence.js) */
+/* Banner variants */
 .bannerOk{
   border-color: rgba(22,163,74,.25);
   background: linear-gradient(180deg, rgba(22,163,74,.10), rgba(255,255,255,0));
@@ -562,15 +616,12 @@ html[data-theme="dark"] .bannerDanger{ background: linear-gradient(180deg, rgba(
   font-size: 12px;
   white-space: nowrap;
 }
-.bannerOk .badge{ border-color: rgba(22,163,74,.25); background: rgba(22,163,74,.12); }
-.bannerWarn .badge{ border-color: rgba(245,158,11,.25); background: rgba(245,158,11,.12); }
-.bannerDanger .badge{ border-color: rgba(220,38,38,.25); background: rgba(220,38,38,.12); }
 
-/* KPI */
+/* KPI mini cards */
 .kpi .kpiValue{
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 950;
-  letter-spacing: -0.35px;
+  letter-spacing: -0.5px;
   margin-top: 6px;
 }
 .kpi .kpiMeta{
@@ -594,7 +645,19 @@ html[data-theme="dark"] .bannerDanger{ background: linear-gradient(180deg, rgba(
   width:0%;
   border-radius: 999px;
   background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  transition: width .55s cubic-bezier(.4,0,.2,1);
 }
+
+/* Pulse (danger only) */
+@keyframes pulse { 0%{opacity:1;} 50%{opacity:.6;} 100%{opacity:1;} }
+.barFill.danger{ background: var(--danger); animation: pulse 2s infinite; }
+.barFill.warn{ background: var(--warning); }
+.barFill.ok{ background: var(--success); }
+
+/* Driver bars (same tone classes) */
+.driverBarFill.danger{ background: var(--danger); }
+.driverBarFill.warn{ background: var(--warning); }
+.driverBarFill.ok{ background: var(--success); }
 
 /* Risk signal chip */
 .chip{
@@ -615,16 +678,12 @@ html[data-theme="dark"] .bannerDanger{ background: linear-gradient(180deg, rgba(
   flex: 0 0 auto;
 }
 
-/* Status chip coloring */
 .chip.ok{ border-color: rgba(22,163,74,.28); background: rgba(22,163,74,.10); }
 .chip.warn{ border-color: rgba(245,158,11,.30); background: rgba(245,158,11,.10); }
 .chip.danger{ border-color: rgba(220,38,38,.30); background: rgba(220,38,38,.10); }
 .chip.ok .chipDot{ background: var(--success); }
 .chip.warn .chipDot{ background: var(--warning); }
 .chip.danger .chipDot{ background: var(--danger); }
-html[data-theme="dark"] .chip.ok{ background: rgba(22,163,74,.14); }
-html[data-theme="dark"] .chip.warn{ background: rgba(245,158,11,.14); }
-html[data-theme="dark"] .chip.danger{ background: rgba(220,38,38,.14); }
 
 /* Formula chips row */
 .formulaRow{
@@ -643,9 +702,7 @@ html[data-theme="dark"] .chip.danger{ background: rgba(220,38,38,.14); }
 }
 .formulaChip b{ font-weight: 950; }
 
-/* =========================================================
-   Drivers + History rows (JS uses these class names)
-========================================================= */
+/* Drivers + History rows */
 .driverItem{
   display:flex;
   justify-content:space-between;
@@ -653,7 +710,7 @@ html[data-theme="dark"] .chip.danger{ background: rgba(220,38,38,.14); }
   gap:14px;
   padding:14px;
   border-radius:16px;
-  border:1px solid var(--border-soft);
+  border:1px solid rgba(15,23,42,.06);
   background: var(--bg-secondary);
   box-shadow: var(--shadow-sm);
 }
@@ -707,7 +764,7 @@ html[data-theme="dark"] .chip.danger{ background: rgba(220,38,38,.14); }
   gap:14px;
   padding:14px;
   border-radius:16px;
-  border:1px solid var(--border-soft);
+  border:1px solid rgba(15,23,42,.06);
   background: var(--bg-secondary);
   box-shadow: var(--shadow-sm);
 }
@@ -745,22 +802,24 @@ html[data-theme="dark"] .chip.danger{ background: rgba(220,38,38,.14); }
   white-space: nowrap;
 }
 
-/* Delta colors */
 .deltaUp{ color: var(--success); font-weight: 950; }
 .deltaDown{ color: var(--danger); font-weight: 950; }
 .deltaFlat{ color: var(--text-muted); font-weight: 900; }
 
 /* =========================================================
-   Suggestions (Actions) — red/yellow/green cards
-   (Works with the updated suggestions.js)
+   Suggestions (Actions)
 ========================================================= */
 .actionCard{
   border-radius: 16px;
-  border: 1px solid var(--border-soft);
+  border: 1px solid rgba(15,23,42,.06);
   background: var(--bg-secondary);
   padding: 14px;
   box-shadow: var(--shadow-sm);
 }
+.actionCard.ok{ border-left: 4px solid var(--success); }
+.actionCard.warn{ border-left: 4px solid var(--warning); }
+.actionCard.danger{ border-left: 4px solid var(--danger); }
+
 .actionHead{
   display:flex;
   align-items:center;
@@ -768,16 +827,19 @@ html[data-theme="dark"] .chip.danger{ background: rgba(220,38,38,.14); }
   gap:10px;
   margin-bottom:8px;
 }
+
 .actionTitle{
   font-weight: 950;
   letter-spacing: -0.2px;
   font-size: 14px;
 }
+
 .actionDesc{
   color: var(--text-muted);
   font-weight: 650;
   line-height: 1.55;
 }
+
 .actionPill{
   padding: 6px 10px;
   border-radius: 999px;
@@ -788,49 +850,12 @@ html[data-theme="dark"] .chip.danger{ background: rgba(220,38,38,.14); }
   white-space: nowrap;
 }
 
-/* Status tones */
-.actionCard.ok{
-  border-color: rgba(22,163,74,.30);
-  background: linear-gradient(180deg, rgba(22,163,74,.10), rgba(255,255,255,0));
+.actionCheck{
+  accent-color: var(--accent);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
 }
-.actionCard.warn{
-  border-color: rgba(245,158,11,.30);
-  background: linear-gradient(180deg, rgba(245,158,11,.10), rgba(255,255,255,0));
-}
-.actionCard.danger{
-  border-color: rgba(220,38,38,.30);
-  background: linear-gradient(180deg, rgba(220,38,38,.10), rgba(255,255,255,0));
-}
-
-.actionPill.ok{
-  border-color: rgba(22,163,74,.35);
-  background: rgba(22,163,74,.14);
-  color: #15803d;
-}
-.actionPill.warn{
-  border-color: rgba(245,158,11,.35);
-  background: rgba(245,158,11,.14);
-  color: #b45309;
-}
-.actionPill.danger{
-  border-color: rgba(220,38,38,.35);
-  background: rgba(220,38,38,.14);
-  color: #b91c1c;
-}
-
-/* Dark theme readability */
-html[data-theme="dark"] .actionCard.ok{
-  background: linear-gradient(180deg, rgba(22,163,74,.16), rgba(15,26,46,0));
-}
-html[data-theme="dark"] .actionCard.warn{
-  background: linear-gradient(180deg, rgba(245,158,11,.16), rgba(15,26,46,0));
-}
-html[data-theme="dark"] .actionCard.danger{
-  background: linear-gradient(180deg, rgba(220,38,38,.16), rgba(15,26,46,0));
-}
-html[data-theme="dark"] .actionPill.ok{ color:#bbf7d0; }
-html[data-theme="dark"] .actionPill.warn{ color:#fde68a; }
-html[data-theme="dark"] .actionPill.danger{ color:#fecaca; }
 
 /* =========================================================
    Workspace / Copilot components
@@ -863,7 +888,7 @@ html[data-theme="dark"] .actionPill.danger{ color:#fecaca; }
 .briefKpi{
   padding: 12px 12px;
   border-radius: 14px;
-  border: 1px solid var(--border-soft);
+  border: 1px solid rgba(15,23,42,.06);
   background: rgba(100,116,139,.06);
 }
 .briefLabel{ color: var(--text-muted); font-weight: 750; font-size:12px; }
@@ -878,11 +903,11 @@ html[data-theme="dark"] .actionPill.danger{ color:#fecaca; }
   gap:10px;
   padding: 8px;
   border-radius: 16px;
-  border: 1px solid var(--border-soft);
+  border: 1px solid rgba(15,23,42,.06);
   background: rgba(100,116,139,.06);
 }
 .segBtn{
-  border: 1px solid var(--border-soft);
+  border: 1px solid rgba(15,23,42,.08);
   background: var(--bg-secondary);
   color: var(--text-primary);
   border-radius: 12px;
@@ -929,7 +954,7 @@ html[data-theme="dark"] .actionPill.danger{ color:#fecaca; }
   line-height: 1.55;
 }
 
-/* Workspace — selectLike (used by copilot.js) */
+/* selectLike */
 .selectLike{
   width:100%;
   border: 1px solid var(--border-soft);
@@ -949,67 +974,3 @@ html[data-theme="dark"] .selectLike:focus{
   border-color: rgba(96,165,250,.55);
   box-shadow: 0 0 0 4px rgba(96,165,250,.14);
 }
-
-/* =========================================================
-   Topbar Brand Strip (logo + compact tagline)
-   (Use this if you switch shell.js to inject .headerBrand)
-========================================================= */
-.headerBrand{
-  display:flex;
-  align-items:center;
-  justify-content:flex-start;
-  gap:12px;
-  margin: 0 0 10px 0;
-  padding: 0;
-}
-
-.hbLeft{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  min-width:0;
-}
-
-.hbMark{
-  width:28px;
-  height:28px;
-  border-radius: 10px;
-  border:1px solid var(--border-soft);
-  background: var(--bg-secondary);
-  box-shadow: var(--shadow-sm);
-  display:grid;
-  place-items:center;
-  color: var(--accent);
-  flex: 0 0 auto;
-}
-
-.hbText{ min-width:0; }
-
-.hbLine{
-  font-weight: 900;
-  font-size: 12.5px;
-  line-height: 1.2;
-  letter-spacing: -0.15px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.hbSub{
-  margin-top: 2px;
-  color: var(--text-muted);
-  font-weight: 650;
-  font-size: 11px;
-  line-height: 1.2;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-@media (max-width: 520px){
-  .hbSub{ display:none; }
-  .hbLine{ font-size: 12px; }
-}
-
-/* Safety: if any old heroTag is still injected, hide it */
-.heroTag{ display:none !important; }
